@@ -1,8 +1,13 @@
-import { Button, Form, Input } from 'antd';
+import { Content } from 'antd/lib/layout/layout';
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { getSessionAsync } from '../../features/userSession/asyncThunks';
+import { ICustomButton } from '../../components/CustomButton/ICustomButton';
+import CustomForm from '../../components/CustomForm';
+import { ICustomInputGroup } from '../../components/CustomInputGroup/ICustomInputGroup';
+import { loginAsync } from '../../features/userSession/asyncThunks';
+import { ICredentials } from '../../features/userSession/IUserSession';
 import { selectUserSession } from '../../features/userSession/userSessionSlice';
+import styles from './styles';
 
 const Login: React.FC = () => {
 
@@ -10,40 +15,44 @@ const Login: React.FC = () => {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        console.log(session);
-    }, [session.sessionStatus]);
+        console.log(session.loginStatus);
+    }, [session.loginStatus]);
+
+    const handleClicLoginButton = (credentials: ICredentials) => {
+        dispatch(loginAsync(credentials))
+    }
+
+    let inputFields: Array<ICustomInputGroup> = [
+        {
+            name: 'username',
+            label: 'User Name',
+            defaultValue: '',
+            disabled: false
+        },
+        {
+            name: 'password',
+            label: 'Password',
+            defaultValue: '',
+            disabled: false,
+            type: 'password'
+        }
+    ]
+
+    let btns: Array<ICustomButton> = [
+        {
+            color: 'blue',
+            _key: 'login_btn',
+            children: 'Login',
+            loading: session.loginStatus === 'pending',
+            htmlType: 'submit'
+        }
+    ]
 
     return (
         <>
-            <Form
-                name="basic"
-                labelCol={{ span: 8 }}
-                wrapperCol={{ span: 16 }}
-                initialValues={{ remember: true }}
-                autoComplete="off"
-            >
-                <Form.Item
-                    label="Username"
-                    name="username"
-                    rules={[{ required: true, message: 'Please input your username!' }]}
-                >
-                    <Input />
-                </Form.Item>
-
-                <Form.Item
-                    label="Password"
-                    name="password"
-                    rules={[{ required: true, message: 'Please input your password!' }]}
-                >
-                    <Input.Password />
-                </Form.Item>
-
-                <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                    <Button type="primary" onClick={() => dispatch(getSessionAsync())}>
-                        Submit
-                    </Button>
-                </Form.Item>
-            </Form>
+            <Content style={styles.container}>
+                <CustomForm onSubmit={handleClicLoginButton} fields={inputFields} buttons={btns} verticalButtons={false} loading={session.loginStatus === 'pending'} />
+            </Content>
         </>
     );
 };

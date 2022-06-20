@@ -1,14 +1,14 @@
-import { Button, Form, Input } from 'antd';
+import { Form } from 'antd';
 import React, { useMemo } from 'react';
 import CustomButton from '../CustomButton';
 import CustomInputGroup from '../CustomInputGroup';
 import { ICustomForm } from './ICustomForm';
 
-const CustomForm: React.FC<ICustomForm> = ({ onSubmit, fields, buttons, loading }) => {
+const CustomForm: React.FC<ICustomForm> = ({ onSubmit, fields, buttons }) => {
 
     const _buttons = useMemo(() => buttons.map(b => (
-        <CustomButton customStyle={{ marginRight: 5 }} key={'btn_' + b.name} loading={loading} {...b} />
-    )), [buttons, loading])
+        <CustomButton customStyle={{ marginRight: 5 }} htmlType={b.htmlType} key={'btn_' + b.name} loading={b.loading} {...b} />
+    )), [buttons])
 
     return (
         <Form
@@ -22,8 +22,8 @@ const CustomForm: React.FC<ICustomForm> = ({ onSubmit, fields, buttons, loading 
             {fields.map(
                 _ => {
                     return <div key={'form_' + _.name} >
-                        {(_.type === undefined || _.type === 'input') &&
-                            <CustomInputGroup disabled={_.disabled} defaultValue={_.defaultValue} name={_.name} label={_.label} />
+                        {(_.type === undefined || _.type === 'input' || _.type === 'password') &&
+                            <CustomInputGroup type={_.type} disabled={_.disabled} defaultValue={_.defaultValue} name={_.name} label={_.label} />
                         }
                     </div>
                 }
