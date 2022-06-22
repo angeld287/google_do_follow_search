@@ -6,15 +6,14 @@
 
 import Encryptions from '../../../providers/Encryptions'
 
-import { validationResult } from 'express-validator';
 import Log from '../../../middlewares/Log';
 import IUser from "../../../interfaces/models/User";
 import IUserService from "../../../interfaces/IUserService";
 import userService from '../../../services/userService';
 var passport = require('passport');
 import { IResponse, IRequest, INext } from '../../../interfaces/vendors';
-import { AuthFailureResponse, BadRequestResponse, SuccessResponse } from '../../../core/ApiResponse';
-import { IUserLoginErrorResponse, IUserLoginResponse } from '../../../interfaces/response/UserResponses';
+import { AuthFailureResponse, SuccessResponse } from '../../../core/ApiResponse';
+import ExpressValidator from '../../../providers/ExpressValidation';
 
 
 class Login {
@@ -27,13 +26,11 @@ class Login {
      */
     public static async perform(req: IRequest, res: IResponse, next: INext): Promise<any> {
         try {
-            const errors = validationResult(req);
+            const errors = new ExpressValidator().validator(req);
             let user: IUserService = new userService();
-            let errorResponse: IUserLoginErrorResponse = null
-            let response: IUserLoginResponse = null
 
             if (!errors.isEmpty()) {
-                return new BadRequestResponse('Validation Error', {
+                return new SuccessResponse('Success', {
                     errors: errors.array()
                 }).send(res);
             }
@@ -46,7 +43,7 @@ class Login {
 
             if (_user === false) {
 
-                return new BadRequestResponse('Validation Error', {
+                return new SuccessResponse('Success', {
                     error: true,
                     message: 'Invalid Username or Password',
                 }).send(res);
