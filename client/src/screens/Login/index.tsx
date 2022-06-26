@@ -1,6 +1,6 @@
 import { Content } from 'antd/lib/layout/layout';
 import { MessageApi } from 'antd/lib/message';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { ICustomButton } from '../../components/CustomButton/ICustomButton';
 import CustomForm from '../../components/CustomForm';
@@ -8,6 +8,7 @@ import { ICustomInputGroup } from '../../components/CustomInputGroup/ICustomInpu
 import { loginAsync } from '../../features/userSession/asyncThunks';
 import { ICredentials } from '../../features/userSession/IUserSession';
 import { selectUserSession } from '../../features/userSession/userSessionSlice';
+import { IValidationError } from '../../interfaces/models/IBase';
 import styles from './styles';
 
 const Login: React.FC = () => {
@@ -15,31 +16,63 @@ const Login: React.FC = () => {
     const session = useAppSelector(selectUserSession);
     const dispatch = useAppDispatch()
     const [message, setMessage] = useState<MessageApi>()
+    const [error, setError] = useState<IValidationError>()
 
     useEffect(() => {
-        var arr = session.error;
-        if (session.loginStatus === 'idle' && arr && message) {
-            if (Array.isArray(arr)) {
-                arr.forEach(e => {
-                    message.error(e.message)
-                });
-            } else {
-                message.error(arr.message)
+        const login = () => {
+
+            setError({
+                message: '',
+                error: false
+            });
+
+            let sessionError = session.error;
+            if (sessionError) {
+                if (!Array.isArray(sessionError)) {
+                    setError({
+                        message: sessionError.message,
+                        error: true
+                    })
+                    return message?.error(sessionError.message)
+                }
+                if (Array.isArray(sessionError)) {
+                    setError({
+                        message: sessionError[0].message,
+                        error: true
+                    })
+                    return sessionError.forEach(e => {
+                        message?.error(e.message)
+                    });
+                }
             }
         }
+
+        if (session.loginStatus === 'idle' && message) {
+            login()
+        } else if (session.loginStatus === 'failed') {
+            setError({
+                message: 'Internal Error',
+                error: true
+            })
+        }
+
     }, [session.loginStatus, session.error, message]);
 
-    const handleClicLoginButton = (credentials: ICredentials, message: MessageApi) => {
-        setMessage(message);
-        dispatch(loginAsync(credentials))
-    }
+    const handleClicLoginButton = useCallback(
+        (credentials: ICredentials, message: MessageApi) => {
+            setMessage(message);
+            dispatch(loginAsync(credentials))
+        }
+        , [dispatch]
+    );
 
     let inputFields: Array<ICustomInputGroup> = [
         {
             name: 'username',
-            label: 'User Name',
+            label: 'Username',
             defaultValue: '',
-            disabled: false
+            disabled: false,
+
         },
         {
             name: 'password',
@@ -56,14 +89,15 @@ const Login: React.FC = () => {
             _key: 'login_btn',
             children: 'Login',
             loading: session.loginStatus === 'pending',
-            htmlType: 'submit'
+            htmlType: 'submit',
+            name: "login",
         }
     ]
 
     return (
         <>
             <Content style={styles.container}>
-                <CustomForm onSubmit={handleClicLoginButton} fields={inputFields} buttons={btns} verticalButtons={false} loading={session.loginStatus === 'pending'} />
+                <CustomForm error={error} onSubmit={handleClicLoginButton} fields={inputFields} buttons={btns} verticalButtons={false} loading={session.loginStatus === 'pending'} />
             </Content>
         </>
     );
