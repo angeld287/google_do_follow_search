@@ -1,11 +1,12 @@
 import IUserService from "../interfaces/IUserService";
 import { IResponse, ResponseStatus, StatusCode } from "../interfaces/models/IResponse";
+import { fetcher } from "../utils/fetch-utils";
 
 class userService implements IUserService {
 
     async login(username: string, password: string): Promise<IResponse> {
         try {
-            const userFetch = await fetch('http://localhost:3001/api/auth/login', {
+            const userFetch = await fetcher('http://localhost:3001/api/auth/login', {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
@@ -14,7 +15,7 @@ class userService implements IUserService {
                 },
                 body: JSON.stringify({ username, password })
             });
-            return await userFetch.json();
+            return await userFetch;
         } catch (error) {
             console.log('error', error);
 
@@ -29,7 +30,7 @@ class userService implements IUserService {
     }
 
     async logout(): Promise<IResponse> {
-        const logoutFetch = await fetch('http://localhost:3001/api/auth/logout', {
+        const logoutFetch = await fetcher('http://localhost:3001/api/auth/logout', {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -38,11 +39,11 @@ class userService implements IUserService {
             }
         });
 
-        return await logoutFetch.json();
+        return await logoutFetch;
     }
 
     async getSession(): Promise<IResponse> {
-        const sessionFetch = await fetch('http://localhost:3001/api/auth/getsession', {
+        const sessionFetch = await fetcher('http://localhost:3001/api/auth/getsession', {
             method: 'GET',
             credentials: 'include',
             headers: {
@@ -51,7 +52,7 @@ class userService implements IUserService {
             }
         });
 
-        return await sessionFetch.json();
+        return await sessionFetch;
     }
 }
 
