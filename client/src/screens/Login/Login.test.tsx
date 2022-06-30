@@ -60,13 +60,12 @@ describe("Login Test Suite", () => {
 
     test('It must respond "E-mail cannot be blank." when email is blank.', async () => {
 
-        functions.writeInInputFoundByPlaceHolder(null, /Username/i, "existingadmin@test.com");
+        functions.writeInInputFoundByPlaceHolder(null, /Username/i, "");
         functions.writeInInputFoundByPlaceHolder(null, /Password/i, "admin2807");
 
         await act(() => {
             fireEvent.click(screen.getByText(/Login/i));
         });
-
 
         await waitFor(() => {
             component.rerender(
@@ -74,60 +73,81 @@ describe("Login Test Suite", () => {
                     <Login />
                 </Provider>
             )
-
             expect(screen.getByText("E-mail cannot be blank.")).toBeInTheDocument();
         });
     });
 
-    //test('It must respond "E-mail is not valid" when email is invalid.', async () => {
-    //
-    //    functions.writeInInputFoundByPlaceHolder(null, /Username/i, "existingadmin");
-    //    functions.writeInInputFoundByPlaceHolder(null, /Password/i, "admin2807");
-    //
-    //    fireEvent.click(screen.getByText(/Login/i));
-    //
-    //    await waitFor(() => {
-    //        //verify if validation message is shown
-    //        expect(screen.getByText("E-mail is not valid.")).toBeInTheDocument();
-    //    });
-    //});
-    //
-    //test('It should respond "Password cannot be blank" when password is blank.', async () => {
-    //
-    //    functions.writeInInputFoundByPlaceHolder(null, /Username/i, "existingadmin@test.com");
-    //    functions.writeInInputFoundByPlaceHolder(null, /Password/i, "");
-    //
-    //    fireEvent.click(screen.getByText(/Login/i));
-    //
-    //    await waitFor(() => {
-    //        //verify if validation message is shown
-    //        expect(screen.getByText("E-mail is not valid.")).toBeInTheDocument();
-    //    });
-    //});
-    //
-    //test('It should respond "Password length must be atleast 8 characters." when password is invalid', async () => {
-    //
-    //    functions.writeInInputFoundByPlaceHolder(null, /Username/i, "existingadmin@test.com");
-    //    functions.writeInInputFoundByPlaceHolder(null, /Password/i, "admin");
-    //
-    //    fireEvent.click(screen.getByText(/Login/i));
-    //
-    //    await waitFor(() => {
-    //        //verify if validation message is shown
-    //        expect(screen.getByText("Password length must be atleast 8 characters.")).toBeInTheDocument();
-    //    });
-    //});
+    test('It must respond "E-mail is not valid" when email is invalid.', async () => {
 
-    //test('It should respond "Invalid Username or Password." when password is invalid', async () => {
-    //
-    //    functions.writeInInputFoundByPlaceHolder(null, /Username/i, "existingadmin@test.com");
-    //    functions.writeInInputFoundByPlaceHolder(null, /Password/i, "admin2807");
-    //
-    //    fireEvent.click(screen.getByText(/Login/i));
-    //
-    //    await waitFor(() => {
-    //        //verify if validation message is shown
-    //        expect(screen.getByText("Invalid Username or Password.")).toBeInTheDocument();
-    //    });
-    //});
+        functions.writeInInputFoundByPlaceHolder(null, /Username/i, "existingadmin");
+        functions.writeInInputFoundByPlaceHolder(null, /Password/i, "admin2807");
+
+        fireEvent.click(screen.getByText(/Login/i));
+
+        await waitFor(() => {
+            component.rerender(
+                <Provider store={store}>
+                    <Login />
+                </Provider>
+            )
+            expect(screen.getByText("E-mail is not valid.")).toBeInTheDocument();
+        });
+    });
+
+    test('It must respond "Password cannot be blank" when password is blank.', async () => {
+
+        functions.writeInInputFoundByPlaceHolder(null, /Username/i, "existingadmin@test.com");
+        functions.writeInInputFoundByPlaceHolder(null, /Password/i, "");
+
+        fireEvent.click(screen.getByText(/Login/i));
+
+        await waitFor(() => {
+            //verify if validation message is shown
+            expect(screen.getByText("Password cannot be blank.")).toBeInTheDocument();
+        });
+    });
+
+    test('It must respond "Password length must be atleast 8 characters." when password is invalid', async () => {
+
+        functions.writeInInputFoundByPlaceHolder(null, /Username/i, "existingadmin@test.com");
+        functions.writeInInputFoundByPlaceHolder(null, /Password/i, "admin");
+
+        fireEvent.click(screen.getByText(/Login/i));
+
+        await waitFor(() => {
+            //verify if validation message is shown
+            expect(screen.getByText("Password length must be atleast 8 characters.")).toBeInTheDocument();
+        });
+    });
+
+    test('It must respond "Invalid Username or Password." when password is invalid', async () => {
+
+        functions.writeInInputFoundByPlaceHolder(null, /Username/i, "existingadmin@test.com");
+        functions.writeInInputFoundByPlaceHolder(null, /Password/i, "badPass");
+
+        fireEvent.click(screen.getByText(/Login/i));
+
+        await waitFor(() => {
+            //verify if validation message is shown
+            expect(screen.getByText("Invalid Username or Password.")).toBeInTheDocument();
+        });
+    });
+
+    test('It must show the home screen when login pass', async () => {
+
+        functions.writeInInputFoundByPlaceHolder(null, /Username/i, "existingadmin@test.com");
+        functions.writeInInputFoundByPlaceHolder(null, /Password/i, "admin2807");
+
+        fireEvent.click(screen.getByText(/Login/i));
+
+        await waitFor(() => {
+            component.rerender(
+                <Provider store={store}>
+                    <Login />
+                </Provider>
+            )
+            //verify if validation message is shown
+            expect(screen.getByText("welcome to home page!")).toBeInTheDocument();
+        });
+    });
 });
