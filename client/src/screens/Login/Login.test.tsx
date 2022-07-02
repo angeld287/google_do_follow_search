@@ -1,11 +1,10 @@
 import React from 'react';
 import { render, RenderResult, functions, fireEvent, screen, waitFor, act } from '../../utils/test-utils';
 import { Provider } from 'react-redux';
-//import { store } from '../../app/store';
 import userSessionReducer from '../../features/userSession/userSessionSlice';
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
-import handlers from './Handlers';
+import handlers from './loginHandlers';
 
 import Login from './index';
 import { configureStore } from '@reduxjs/toolkit';
@@ -31,6 +30,9 @@ describe("Login Test Suite", () => {
     }));
 
     beforeEach(() => {
+        if (component)
+            component.unmount()
+
         act(() => {
             component = render(
                 <Provider store={store}>
@@ -38,23 +40,19 @@ describe("Login Test Suite", () => {
                 </Provider>
             )
         });
-
         server.resetHandlers()
     });
 
     afterAll(() => server.close())
 
     test('It must render the component correcly', () => {
-        const { asFragment } = component;
-        expect(asFragment()).toMatchSnapshot();
+        expect(component.asFragment()).toMatchSnapshot();
     })
 
     test('It must display basic login components', () => {
-        const { getByText } = component;
-
-        expect(getByText(/Username/i)).toBeInTheDocument();
-        expect(getByText(/Password/i)).toBeInTheDocument();
-        expect(getByText(/Login/i)).toBeInTheDocument();
+        expect(component.getByText(/Username/i)).toBeInTheDocument();
+        expect(component.getByText(/Password/i)).toBeInTheDocument();
+        expect(component.getByText(/Login/i)).toBeInTheDocument();
     });
 
 
@@ -82,7 +80,9 @@ describe("Login Test Suite", () => {
         functions.writeInInputFoundByPlaceHolder(null, /Username/i, "existingadmin");
         functions.writeInInputFoundByPlaceHolder(null, /Password/i, "admin2807");
 
-        fireEvent.click(screen.getByText(/Login/i));
+        await act(() => {
+            fireEvent.click(screen.getByText(/Login/i));
+        });
 
         await waitFor(() => {
             component.rerender(
@@ -99,7 +99,9 @@ describe("Login Test Suite", () => {
         functions.writeInInputFoundByPlaceHolder(null, /Username/i, "existingadmin@test.com");
         functions.writeInInputFoundByPlaceHolder(null, /Password/i, "");
 
-        fireEvent.click(screen.getByText(/Login/i));
+        await act(() => {
+            fireEvent.click(screen.getByText(/Login/i));
+        });
 
         await waitFor(() => {
             //verify if validation message is shown
@@ -112,7 +114,9 @@ describe("Login Test Suite", () => {
         functions.writeInInputFoundByPlaceHolder(null, /Username/i, "existingadmin@test.com");
         functions.writeInInputFoundByPlaceHolder(null, /Password/i, "admin");
 
-        fireEvent.click(screen.getByText(/Login/i));
+        await act(() => {
+            fireEvent.click(screen.getByText(/Login/i));
+        });
 
         await waitFor(() => {
             //verify if validation message is shown
@@ -125,29 +129,13 @@ describe("Login Test Suite", () => {
         functions.writeInInputFoundByPlaceHolder(null, /Username/i, "existingadmin@test.com");
         functions.writeInInputFoundByPlaceHolder(null, /Password/i, "badPass");
 
-        fireEvent.click(screen.getByText(/Login/i));
+        await act(() => {
+            fireEvent.click(screen.getByText(/Login/i));
+        });
 
         await waitFor(() => {
             //verify if validation message is shown
             expect(screen.getByText("Invalid Username or Password.")).toBeInTheDocument();
-        });
-    });
-
-    test('It must show the home screen when login pass', async () => {
-
-        functions.writeInInputFoundByPlaceHolder(null, /Username/i, "existingadmin@test.com");
-        functions.writeInInputFoundByPlaceHolder(null, /Password/i, "admin2807");
-
-        fireEvent.click(screen.getByText(/Login/i));
-
-        await waitFor(() => {
-            component.rerender(
-                <Provider store={store}>
-                    <Login />
-                </Provider>
-            )
-            //verify if validation message is shown
-            expect(screen.getByText("welcome to home page!")).toBeInTheDocument();
         });
     });
 });
