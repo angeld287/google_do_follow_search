@@ -5,7 +5,6 @@ import styles from "./styles";
 //import { useAppDispatch } from "../../app/hooks";
 import { MessageApi } from "antd/lib/message";
 import { IValidationError } from "../../interfaces/models/IBase";
-import { ICustomInputGroup } from "../../components/CustomInputGroup/ICustomInputGroup";
 import { ICustomButton } from "../../components/CustomButton/ICustomButton";
 import { selectUserRegister, setIsRegistering } from "../../features/userRegister/userRegisterSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
@@ -181,7 +180,7 @@ const Register: React.FC = () => {
             color: 'blue',
             _key: 'register_btn',
             children: 'Sign Up',
-            loading: false,
+            loading: register.status === 'pending',
             htmlType: 'submit',
             name: "register",
         }
