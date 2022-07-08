@@ -11,6 +11,7 @@ import { selectUserRegister, setIsRegistering } from "../../features/userRegiste
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { IRegisterUser } from "../../interfaces/models/IUser";
 import { registerAsync } from "../../features/userRegister/asyncThunks";
+import { ICustomFields } from "../../components/CustomForm/ICustomForm";
 
 
 const Register: React.FC = () => {
@@ -30,6 +31,9 @@ const Register: React.FC = () => {
                 error: false
             });
 
+            if (!message)
+                return
+
             let registerError = register.error;
             if (registerError) {
                 if (!Array.isArray(registerError)) {
@@ -37,7 +41,7 @@ const Register: React.FC = () => {
                         message: registerError.message,
                         error: true
                     })
-                    return message?.error(registerError.message)
+                    return message.error(registerError.message)
                 }
                 if (Array.isArray(registerError)) {
                     setError({
@@ -45,9 +49,14 @@ const Register: React.FC = () => {
                         error: true
                     })
                     return registerError.forEach(e => {
-                        message?.error(e.message)
+                        message.error(e.message)
                     });
                 }
+            }
+
+            if (register.isRegistered) {
+                message.success(register.message + " You can login.")
+                dispatch(setIsRegistering(false))
             }
         }
 
@@ -60,64 +69,101 @@ const Register: React.FC = () => {
             })
         }
 
-    }, [register.status, register.error, message]);
+    }, [register.status, register.error, message, register.message, register.isRegistered, dispatch]);
 
     const handleClicRegisterButton = useCallback(
         (user: IRegisterUser, message: MessageApi) => {
             setMessage(message);
             dispatch(registerAsync(user))
         }
-        , []
+        , [dispatch]
     );
 
     const closeRegisterScreen = useCallback(() => {
         dispatch(setIsRegistering(false));
     }, [dispatch])
 
-    let inputFields: Array<ICustomInputGroup> = [
+    let inputFields: Array<ICustomFields> = [
         {
             name: 'email',
-            label: 'Email',
-            defaultValue: '',
-            disabled: false,
+            input: {
+                name: 'email',
+                label: 'Email',
+                defaultValue: '',
+                disabled: false,
+                type: 'input',
+            }
         },
         {
             name: 'username',
-            label: 'Username',
-            defaultValue: '',
-            disabled: false,
+            input: {
+                name: 'username',
+                label: 'Username',
+                defaultValue: '',
+                disabled: false,
+                type: 'input',
+            }
         },
         {
-            name: 'phonenumber',
-            label: 'Phone Number',
-            defaultValue: '',
-            disabled: false,
+            name: 'phoneNumber',
+            input: {
+                name: 'phoneNumber',
+                label: 'Phone Number',
+                defaultValue: '',
+                disabled: false,
+                type: 'input',
+            }
         },
         {
             name: 'password',
-            label: 'Password',
-            defaultValue: '',
-            disabled: false,
-            type: 'password'
+            input: {
+                name: 'password',
+                label: 'Password',
+                defaultValue: '',
+                disabled: false,
+                type: 'password',
+            }
         },
         {
-            name: 'confirmpassword',
-            label: 'Confirm your password',
-            defaultValue: '',
-            disabled: false,
-            type: 'password'
+            name: 'confirmPassword',
+            input: {
+                name: 'confirmPassword',
+                label: 'Confirm your password',
+                defaultValue: '',
+                disabled: false,
+                type: 'password',
+            }
         },
         {
-            name: 'fullname',
-            label: 'Fullname',
-            defaultValue: '',
-            disabled: false,
+            name: 'fullName',
+            input: {
+                name: 'fullName',
+                label: 'Fullname',
+                defaultValue: '',
+                disabled: false,
+                type: 'input'
+            }
         },
         {
             name: 'gender',
-            label: 'Gender',
-            defaultValue: '',
-            disabled: false,
+            select: {
+                getItemsNextToken: () => { },
+                name: 'gender',
+                placeholder: 'Gender',
+                defaultValue: '',
+                disabled: false,
+                items: [
+                    {
+                        id: 'm',
+                        name: 'Male'
+                    },
+                    {
+                        id: 'f',
+                        name: 'Female'
+                    }
+                ],
+
+            }
         }
     ]
 
