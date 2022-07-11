@@ -9,7 +9,9 @@ RUN npm install --production
 # Copy app files
 COPY . .
 # Build the app
-RUN npm build
+RUN SERVER_HOST=${SERVER_HOST} \ 
+    SERVER_PORT=${SERVER_PORT} \
+    npm run build
 
 # Bundle static assets with nginx
 FROM nginx:1.21.0-alpine as production
