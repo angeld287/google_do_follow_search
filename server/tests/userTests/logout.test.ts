@@ -28,7 +28,7 @@ describe('Test login user', () => {
 
     const user = {
         username: "existingadmin@test.com",
-        password: "admin2807"
+        password: "adminPass22"
     }
 
     test('It must logout the current authenticated user and set the token null', async () => {

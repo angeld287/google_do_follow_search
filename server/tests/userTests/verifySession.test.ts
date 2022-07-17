@@ -29,7 +29,7 @@ describe('Test User Session', () => {
 
     const user = {
         username: "existingadmin@test.com",
-        password: "admin2807"
+        password: "adminPass22"
     }
 
     test('It must must return a user session data when user is logged in', async () => {

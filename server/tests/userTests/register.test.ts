@@ -13,7 +13,7 @@ describe('Test register user', () => {
     const userRegister = {
         email: "admin@test.com",
         username: "adminUserName",
-        phoneNumber: "8095445500",
+        phoneNumber: "8095445501",
         password: "adminPass22",
         confirmPassword: "adminPass22",
         fullName: "User Admin For Tests",
@@ -111,7 +111,7 @@ describe('Test register user', () => {
     /* PASSWORD VALIDATIONS */
 
     test('It should respond "Password cannot be blank" when password is blank', async () => {
-        userRegister.phoneNumber = "8095445500"
+        userRegister.phoneNumber = "8095445501"
         userRegister.password = ""
 
         const response = await request(app)
@@ -249,7 +249,7 @@ describe('Test register user', () => {
 
 
     test('It should respond "The userName: XXXXX already exist." when the email already exist in the db', async () => {
-        userRegister.phoneNumber = "8095445500"
+        userRegister.phoneNumber = "8095445505"
         userRegister.username = "existingAdmin"
 
         const response = await request(app)
