@@ -1,10 +1,9 @@
-
 const request = require('supertest');
-import Routes from '../src/providers/Routes';
+import Routes from '../../src/providers/Routes';
 import express from 'express'
-import Locals from '../src/providers/Locals';
+import Locals from '../../src/providers/Locals';
 import session from 'express-session';
-import Passport from '../src/providers/Passport';
+import Passport from '../../src/providers/Passport';
 import passport from 'passport';
 
 let app: express.Application = express();
