@@ -25,7 +25,7 @@ app = Routes.mountApi(app);
 describe('Test login user', () => {
     const user = {
         username: "existingadmin@test.com",
-        password: "admin2807"
+        password: "adminPass22"
     }
 
     test('The response should match with the interfaces IUser when login with correct credentials', async () => {

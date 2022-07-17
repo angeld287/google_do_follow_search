@@ -28,7 +28,7 @@ describe('Test getPageSource', () => {
 
     const user = {
         username: "existingadmin@test.com",
-        password: "admin2807"
+        password: "adminPass22"
     }
 
     const body = {
