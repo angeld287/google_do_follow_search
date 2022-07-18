@@ -32,7 +32,9 @@ describe('Test googleSearch', () => {
     }
 
     const body = {
-        text: "google SEO"
+        text: "google SEO",
+        nextIndex: 0,
+        previousIndex: 0,
     }
 
     test('It must show "You are not authenticated!" when the user did not logged in.', async () => {
@@ -135,6 +137,8 @@ describe('Test googleSearch', () => {
             .expect('Content-Type', /json/)
             .expect(200);
 
+        body.nextIndex = 10
+
         expect(responseNext.body.data.success).toBe(true);
         expect(responseNext.body.data.response.length).toBe(10);
 
@@ -169,6 +173,8 @@ describe('Test googleSearch', () => {
         expect(response.body.data.success).toBe(true);
         expect(response.body.data.response.length).toBe(10);
 
+        body.nextIndex = 10
+
         const responseNext = await request(app)
             .post('/api/nextPage')
             .set('Cookie', loginResponse.header['set-cookie'])
@@ -179,17 +185,17 @@ describe('Test googleSearch', () => {
         expect(responseNext.body.data.success).toBe(true);
         expect(responseNext.body.data.response.length).toBe(10);
 
-
-        const responsePreview = await request(app)
-            .post('/api/previewPage')
+        body.previousIndex = 0
+        const responsePrevious = await request(app)
+            .post('/api/previousPage')
             .set('Cookie', loginResponse.header['set-cookie'])
             .send(body)
             .expect('Content-Type', /json/)
             .expect(200);
 
-        expect(responsePreview.body.data.success).toBe(true);
-        expect(responsePreview.body.data.response.length).toBe(10);
-        expect(responsePreview.body.data.response[0].title).toEqual(response.body.data.response[0].title);
+        expect(responsePrevious.body.data.success).toBe(true);
+        expect(responsePrevious.body.data.response.length).toBe(10);
+        expect(responsePrevious.body.data.response[0].title).toEqual(response.body.data.response[0].title);
 
         const logoutresponse = await request(app)
             .post('/api/auth/logout')

@@ -20,7 +20,7 @@ class Locals {
         const apiPrefix = process.env.API_PREFIX || 'api';
 
         //Google Search (GS) Url Configurations
-        const GSKey = "AIzaSyCyw0xtlbcJiaRUDB3bNWbkcW2IJWprrbc"
+        const GSKey = "AIzaSyBEb-Wfy5wsBZ2lqZR2f4eQ7RPrsTSe4z4"
         const GSCx = "023b4f4fbb0dc9628"
         const GSLimit = "10"
 

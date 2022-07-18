@@ -10,6 +10,7 @@ import { AuthFailureResponse, SuccessResponse } from '../../../core/ApiResponse'
 import ExpressValidator from '../../../providers/ExpressValidation';
 import googleSearchService from '../../../services/googleSearchService';
 import IGoogleSearchService from '../../../interfaces/IGoogleSearchService';
+import GoogleSearchResult from '../../../interfaces/models/GoogleSearchResult';
 
 
 class Search {
@@ -35,9 +36,25 @@ class Search {
             const text = encodeURIComponent(req.body.text);
 
             const search = await user.getSearch(text);
+            let results: Array<GoogleSearchResult> = [];
+
+            search.forEach(result => {
+                results.push({
+                    kind: result.kind,
+                    title: result.title,
+                    htmlTitle: result.htmlTitle,
+                    link: result.link,
+                    displayLink: result.displayLink,
+                    snippet: result.snippet,
+                    htmlSnippet: result.htmlSnippet,
+                    cacheId: result.cacheId,
+                    formattedUrl: result.formattedUrl,
+                    htmlFormattedUrl: result.htmlFormattedUrl,
+                })
+            })
 
             return new SuccessResponse('Success', {
-                session: search,
+                results
             }).send(res);
 
         } catch (error) {

@@ -66,7 +66,23 @@ router.post(
 router.post(
     '/search',
     body('text', 'The field text is empty.').notEmpty(),
-    Passport.isAuthenticated,
+    //Passport.isAuthenticated,
+    Search.perform
+);
+
+router.post(
+    '/nextSearch',
+    body('text', 'The field text is empty.').notEmpty(),
+    body('nextIndex', 'The field nextIndex is empty.').notEmpty(),
+    //Passport.isAuthenticated,
+    Search.perform
+);
+
+router.post(
+    '/previousSearch',
+    body('text', 'The field text is empty.').notEmpty(),
+    body('previousIndex', 'The field previousIndex is empty.').notEmpty(),
+    //Passport.isAuthenticated,
     Search.perform
 );
 
