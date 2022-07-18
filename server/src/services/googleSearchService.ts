@@ -6,6 +6,7 @@
 
 import IGoogleSearchService from '../interfaces/IGoogleSearchService';
 import Locals from '../providers/Locals';
+import fetch from '../utils/fetch';
 
 class googleSearchService implements IGoogleSearchService {
 
@@ -21,6 +22,8 @@ class googleSearchService implements IGoogleSearchService {
             const { GSUrl, GSStartKeyword, GSQueryKeyword } = Locals.config()
 
             const searchUrl = GSUrl + GSStartKeyword + "0" + GSQueryKeyword + text;
+
+
             result = fetch(searchUrl);
 
             return result

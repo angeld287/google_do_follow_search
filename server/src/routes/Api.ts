@@ -10,9 +10,9 @@ import LoginController from '../controllers/Api/Auth/Login'
 import RegisterController from '../controllers/Api/Auth/Register'
 import LogoutController from '../controllers/Api/Auth/Logout';
 import PageSource from '../controllers/Api/Pages/PageSource';
-import Search from '../controllers/Api/GoogleSearch/search';
 import Passport from '../providers/Passport';
 import Session from '../controllers/Api/Auth/Session';
+import Search from '../controllers/Api/GoogleSearch/Search';
 
 const router = Router();
 
