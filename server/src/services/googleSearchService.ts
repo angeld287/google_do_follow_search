@@ -5,8 +5,10 @@
  */
 
 import IGoogleSearchService from '../interfaces/IGoogleSearchService';
+import Locals from '../providers/Locals';
+import fetch from '../utils/fetch';
 
-class googleSearchServices implements IGoogleSearchService {
+class googleSearchService implements IGoogleSearchService {
 
     /*
     * Execute a request to find the google search
@@ -16,13 +18,16 @@ class googleSearchServices implements IGoogleSearchService {
     async getSearch(text: string): Promise<any | ErrorConstructor> {
         let result = null;
         try {
-            result = [];
-            if (result.rows.length > 0) {
-                delete result.rows[0].user_password;
-                return result.rows[0];
-            } else {
-                return false;
-            }
+
+            const { GSUrl, GSStartKeyword, GSQueryKeyword } = Locals.config()
+
+            const searchUrl = GSUrl + GSStartKeyword + "0" + GSQueryKeyword + text;
+
+
+            const response = await fetch(searchUrl);
+            result = await response.json();
+
+            return result.items
         } catch (error) {
             throw new Error(error.message);
         }
@@ -37,13 +42,12 @@ class googleSearchServices implements IGoogleSearchService {
     async getNextSearch(text: string, nextIndex: number): Promise<any | ErrorConstructor> {
         let result = null;
         try {
-            result = [];
-            if (result.rows.length > 0) {
-                delete result.rows[0].user_password;
-                return result.rows[0];
-            } else {
-                return false;
-            }
+            const { GSUrl, GSStartKeyword, GSQueryKeyword } = Locals.config()
+
+            const searchUrl = GSUrl + GSStartKeyword + nextIndex + GSQueryKeyword + text;
+            result = await fetch(searchUrl);
+
+            return result
         } catch (error) {
             throw new Error(error.message);
         }
@@ -58,17 +62,16 @@ class googleSearchServices implements IGoogleSearchService {
     async getPreviewsSearch(text: string, previewsIndex: number): Promise<any | ErrorConstructor> {
         let result = null;
         try {
-            result = [];
-            if (result.rows.length > 0) {
-                delete result.rows[0].user_password;
-                return result.rows[0];
-            } else {
-                return false;
-            }
+            const { GSUrl, GSStartKeyword, GSQueryKeyword } = Locals.config()
+
+            const searchUrl = GSUrl + GSStartKeyword + previewsIndex + GSQueryKeyword + text;
+            result = await fetch(searchUrl);
+
+            return result
         } catch (error) {
             throw new Error(error.message);
         }
     }
 }
 
-export default googleSearchServices;
+export default googleSearchService;

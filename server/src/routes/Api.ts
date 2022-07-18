@@ -12,6 +12,7 @@ import LogoutController from '../controllers/Api/Auth/Logout';
 import PageSource from '../controllers/Api/Pages/PageSource';
 import Passport from '../providers/Passport';
 import Session from '../controllers/Api/Auth/Session';
+import Search from '../controllers/Api/GoogleSearch/Search';
 
 const router = Router();
 
@@ -60,6 +61,29 @@ router.post(
     body('url', 'url cannot be blank.').notEmpty(),
     Passport.isAuthenticated,
     PageSource.getPageSource
+);
+
+router.post(
+    '/search',
+    body('text', 'The field text is empty.').notEmpty(),
+    //Passport.isAuthenticated,
+    Search.perform
+);
+
+router.post(
+    '/nextSearch',
+    body('text', 'The field text is empty.').notEmpty(),
+    body('nextIndex', 'The field nextIndex is empty.').notEmpty(),
+    //Passport.isAuthenticated,
+    Search.perform
+);
+
+router.post(
+    '/previousSearch',
+    body('text', 'The field text is empty.').notEmpty(),
+    body('previousIndex', 'The field previousIndex is empty.').notEmpty(),
+    //Passport.isAuthenticated,
+    Search.perform
 );
 
 router.get(

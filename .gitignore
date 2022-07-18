@@ -6,5 +6,6 @@ client/env-config.js
 
 server/node_modules
 server/.logs
+server/coverage
 
 dist

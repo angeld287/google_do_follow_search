@@ -13,7 +13,7 @@ import IGoogleSearchService from '../../../interfaces/IGoogleSearchService';
 import GoogleSearchResult from '../../../interfaces/models/GoogleSearchResult';
 
 
-class SearchNextPage {
+class SearchPreviousPage {
 
     /**
      * Execute the action of search a text in google search engine
@@ -34,9 +34,9 @@ class SearchNextPage {
             let user: IGoogleSearchService = new googleSearchService();
 
             const text = encodeURIComponent(req.body.text);
-            const nextIndex = req.body.nextIndex;
+            const previousIndex = req.body.previousIndex;
 
-            const search = await user.getNextSearch(text, nextIndex);
+            const search = await user.getPreviewsSearch(text, previousIndex);
             let results: Array<GoogleSearchResult> = [];
 
             search.forEach(result => {
@@ -67,4 +67,4 @@ class SearchNextPage {
     }
 }
 
-export default SearchNextPage;
+export default SearchPreviousPage;

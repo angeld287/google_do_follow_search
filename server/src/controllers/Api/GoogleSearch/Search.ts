@@ -4,16 +4,13 @@
  * @author Angel Angeles <aangeles@litystyles.com>
  */
 
-import Encryptions from '../../../providers/Encryptions'
-
 import Log from '../../../middlewares/Log';
-import IUser from "../../../interfaces/models/User";
-import IUserService from "../../../interfaces/IUserService";
-import userService from '../../../services/userService';
-var passport = require('passport');
 import { IResponse, IRequest, INext } from '../../../interfaces/vendors';
 import { AuthFailureResponse, SuccessResponse } from '../../../core/ApiResponse';
 import ExpressValidator from '../../../providers/ExpressValidation';
+import googleSearchService from '../../../services/googleSearchService';
+import IGoogleSearchService from '../../../interfaces/IGoogleSearchService';
+import GoogleSearchResult from '../../../interfaces/models/GoogleSearchResult';
 
 
 class Search {
@@ -34,57 +31,31 @@ class Search {
                 }).send(res);
             }
 
-            let user: IUserService = new userService();
+            let user: IGoogleSearchService = new googleSearchService();
 
-            const _username = req.body.username.toLowerCase();
-            const _password = Encryptions.hash(req.body.password);
-            req.body.password = _password;
+            const text = encodeURIComponent(req.body.text);
 
-            const _user = await user.validateUser(_username, _password);
+            const search = await user.getSearch(text);
+            let results: Array<GoogleSearchResult> = [];
 
-            if (_user === false) {
+            search.forEach(result => {
+                results.push({
+                    kind: result.kind,
+                    title: result.title,
+                    htmlTitle: result.htmlTitle,
+                    link: result.link,
+                    displayLink: result.displayLink,
+                    snippet: result.snippet,
+                    htmlSnippet: result.htmlSnippet,
+                    cacheId: result.cacheId,
+                    formattedUrl: result.formattedUrl,
+                    htmlFormattedUrl: result.htmlFormattedUrl,
+                })
+            })
 
-                return new SuccessResponse('Success', {
-                    error: true,
-                    message: 'Invalid Username or Password',
-                }).send(res);
-            }
-
-            Log.info(`New user logged ` + _username);
-
-            let userObject: IUser = {
-                id: _user.id,
-                email: _user.email,
-                phoneNumber: _user.phone_number,
-                passwordResetToken: _user.password_reset_token,
-                passwordResetExpires: _user.password_reset_expires,
-                fullname: _user.fullname,
-                gender: _user.gender,
-                profile: _user.profile,
-                userName: _user.user_name,
-            };
-
-            passport.authenticate('local', (err: any, user: any, info: any) => {
-                Log.info('Here in the login controller #2!');
-
-                if (err) {
-                    return next(err);
-                }
-
-                if (info) {
-                    return new AuthFailureResponse('Validation Error', {
-                        error: true,
-                        message: info.message || info.msg,
-                    }).send(res);
-                }
-
-                return req.logIn({ ...userObject }, () => {
-                    return new SuccessResponse('Success', {
-                        session: req.session.passport.user,
-                    }).send(res);
-                });
-
-            })(req, res, next);
+            return new SuccessResponse('Success', {
+                results
+            }).send(res);
 
         } catch (error) {
             Log.error(`Internal Server Error ` + error);
