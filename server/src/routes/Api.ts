@@ -10,6 +10,7 @@ import LoginController from '../controllers/Api/Auth/Login'
 import RegisterController from '../controllers/Api/Auth/Register'
 import LogoutController from '../controllers/Api/Auth/Logout';
 import PageSource from '../controllers/Api/Pages/PageSource';
+import Search from '../controllers/Api/GoogleSearch/search';
 import Passport from '../providers/Passport';
 import Session from '../controllers/Api/Auth/Session';
 
@@ -60,6 +61,13 @@ router.post(
     body('url', 'url cannot be blank.').notEmpty(),
     Passport.isAuthenticated,
     PageSource.getPageSource
+);
+
+router.post(
+    '/search',
+    body('text', 'The field text is empty.').notEmpty(),
+    Passport.isAuthenticated,
+    Search.perform
 );
 
 router.get(
