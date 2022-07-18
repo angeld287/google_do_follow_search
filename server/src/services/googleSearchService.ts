@@ -5,6 +5,7 @@
  */
 
 import IGoogleSearchService from '../interfaces/IGoogleSearchService';
+import Locals from '../providers/Locals';
 
 class googleSearchService implements IGoogleSearchService {
 
@@ -16,13 +17,13 @@ class googleSearchService implements IGoogleSearchService {
     async getSearch(text: string): Promise<any | ErrorConstructor> {
         let result = null;
         try {
-            result = [];
-            if (result.rows.length > 0) {
-                delete result.rows[0].user_password;
-                return result.rows[0];
-            } else {
-                return false;
-            }
+
+            const { GSUrl, GSStartKeyword, GSQueryKeyword } = Locals.config()
+
+            const searchUrl = GSUrl + GSStartKeyword + "0" + GSQueryKeyword + text;
+            result = fetch(searchUrl);
+
+            return result
         } catch (error) {
             throw new Error(error.message);
         }
@@ -37,13 +38,12 @@ class googleSearchService implements IGoogleSearchService {
     async getNextSearch(text: string, nextIndex: number): Promise<any | ErrorConstructor> {
         let result = null;
         try {
-            result = [];
-            if (result.rows.length > 0) {
-                delete result.rows[0].user_password;
-                return result.rows[0];
-            } else {
-                return false;
-            }
+            const { GSUrl, GSStartKeyword, GSQueryKeyword } = Locals.config()
+
+            const searchUrl = GSUrl + GSStartKeyword + nextIndex + GSQueryKeyword + text;
+            result = fetch(searchUrl);
+
+            return result
         } catch (error) {
             throw new Error(error.message);
         }
@@ -58,13 +58,12 @@ class googleSearchService implements IGoogleSearchService {
     async getPreviewsSearch(text: string, previewsIndex: number): Promise<any | ErrorConstructor> {
         let result = null;
         try {
-            result = [];
-            if (result.rows.length > 0) {
-                delete result.rows[0].user_password;
-                return result.rows[0];
-            } else {
-                return false;
-            }
+            const { GSUrl, GSStartKeyword, GSQueryKeyword } = Locals.config()
+
+            const searchUrl = GSUrl + GSStartKeyword + previewsIndex + GSQueryKeyword + text;
+            result = fetch(searchUrl);
+
+            return result
         } catch (error) {
             throw new Error(error.message);
         }

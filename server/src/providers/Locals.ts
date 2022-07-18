@@ -19,7 +19,7 @@ class Locals {
         const appSecret = process.env.APP_SECRET || 'secret_key';
         const apiPrefix = process.env.API_PREFIX || 'api';
 
-        //https://www.googleapis.com/customsearch/v1?key=AIzaSyCyw0xtlbcJiaRUDB3bNWbkcW2IJWprrbc&cx=023b4f4fbb0dc9628&num=10&start=0&q=
+        //Google Search (GS) Url Configurations
         const GSKey = "AIzaSyCyw0xtlbcJiaRUDB3bNWbkcW2IJWprrbc"
         const GSCx = "023b4f4fbb0dc9628"
         const GSLimit = "10"
