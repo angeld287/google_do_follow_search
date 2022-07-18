@@ -6,7 +6,7 @@
 
 import IGoogleSearchService from '../interfaces/IGoogleSearchService';
 
-class googleSearchServices implements IGoogleSearchService {
+class googleSearchService implements IGoogleSearchService {
 
     /*
     * Execute a request to find the google search
@@ -71,4 +71,4 @@ class googleSearchServices implements IGoogleSearchService {
     }
 }
 
-export default googleSearchServices;
+export default googleSearchService;

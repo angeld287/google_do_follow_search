@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1658100431501" clover="3.2.0">
-  <project timestamp="1658100431501" name="All files">
+<coverage generated="1658147648168" clover="3.2.0">
+  <project timestamp="1658147648168" name="All files">
     <metrics statements="298" coveredstatements="179" conditionals="82" coveredconditionals="48" methods="78" coveredmethods="50" elements="458" coveredelements="277" complexity="0" loc="298" ncloc="298" packages="8" files="16" classes="16"/>
     <package name="controllers.Api.Auth">
       <metrics statements="64" coveredstatements="49" conditionals="22" coveredconditionals="14" methods="11" coveredmethods="11"/>
@@ -149,10 +149,10 @@
         <line num="58" count="132" type="stmt"/>
         <line num="59" count="132" type="cond" truecount="3" falsecount="1"/>
         <line num="61" count="132" type="stmt"/>
-        <line num="62" count="128" type="cond" truecount="1" falsecount="1"/>
-        <line num="63" count="128" type="stmt"/>
-        <line num="64" count="127" type="cond" truecount="1" falsecount="1"/>
-        <line num="65" count="127" type="stmt"/>
+        <line num="62" count="127" type="cond" truecount="1" falsecount="1"/>
+        <line num="63" count="127" type="stmt"/>
+        <line num="64" count="125" type="cond" truecount="1" falsecount="1"/>
+        <line num="65" count="125" type="stmt"/>
         <line num="67" count="0" type="stmt"/>
         <line num="71" count="0" type="stmt"/>
         <line num="75" count="0" type="stmt"/>
