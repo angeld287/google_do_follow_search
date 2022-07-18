@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1658147648168" clover="3.2.0">
-  <project timestamp="1658147648168" name="All files">
-    <metrics statements="298" coveredstatements="179" conditionals="82" coveredconditionals="48" methods="78" coveredmethods="50" elements="458" coveredelements="277" complexity="0" loc="298" ncloc="298" packages="8" files="16" classes="16"/>
+<coverage generated="1658149408818" clover="3.2.0">
+  <project timestamp="1658149408818" name="All files">
+    <metrics statements="304" coveredstatements="185" conditionals="82" coveredconditionals="48" methods="78" coveredmethods="50" elements="464" coveredelements="283" complexity="0" loc="304" ncloc="304" packages="8" files="16" classes="16"/>
     <package name="controllers.Api.Auth">
       <metrics statements="64" coveredstatements="49" conditionals="22" coveredconditionals="14" methods="11" coveredmethods="11"/>
       <file name="Login.ts" path="/Users/aangeles/Desktop/projects/demo/google_do_follow_search/server/src/controllers/Api/Auth/Login.ts">
@@ -147,10 +147,10 @@
         <line num="55" count="132" type="stmt"/>
         <line num="56" count="132" type="stmt"/>
         <line num="58" count="132" type="stmt"/>
-        <line num="59" count="132" type="cond" truecount="3" falsecount="1"/>
-        <line num="61" count="132" type="stmt"/>
-        <line num="62" count="127" type="cond" truecount="1" falsecount="1"/>
-        <line num="63" count="127" type="stmt"/>
+        <line num="59" count="131" type="cond" truecount="3" falsecount="1"/>
+        <line num="61" count="131" type="stmt"/>
+        <line num="62" count="126" type="cond" truecount="1" falsecount="1"/>
+        <line num="63" count="126" type="stmt"/>
         <line num="64" count="125" type="cond" truecount="1" falsecount="1"/>
         <line num="65" count="125" type="stmt"/>
         <line num="67" count="0" type="stmt"/>
@@ -159,7 +159,7 @@
       </file>
     </package>
     <package name="providers">
-      <metrics statements="90" coveredstatements="36" conditionals="20" coveredconditionals="11" methods="23" coveredmethods="13"/>
+      <metrics statements="96" coveredstatements="42" conditionals="20" coveredconditionals="11" methods="23" coveredmethods="13"/>
       <file name="Database.ts" path="/Users/aangeles/Desktop/projects/demo/google_do_follow_search/server/src/providers/Database.ts">
         <metrics statements="48" coveredstatements="7" conditionals="6" coveredconditionals="0" methods="7" coveredmethods="2"/>
         <line num="7" count="6" type="stmt"/>
@@ -227,15 +227,21 @@
         <line num="16" count="24" type="stmt"/>
       </file>
       <file name="Locals.ts" path="/Users/aangeles/Desktop/projects/demo/google_do_follow_search/server/src/providers/Locals.ts">
-        <metrics statements="8" coveredstatements="6" conditionals="8" coveredconditionals="8" methods="2" coveredmethods="1"/>
+        <metrics statements="14" coveredstatements="12" conditionals="8" coveredconditionals="8" methods="2" coveredmethods="1"/>
         <line num="16" count="17" type="cond" truecount="2" falsecount="0"/>
         <line num="17" count="17" type="cond" truecount="2" falsecount="0"/>
         <line num="19" count="17" type="cond" truecount="2" falsecount="0"/>
         <line num="20" count="17" type="cond" truecount="2" falsecount="0"/>
         <line num="23" count="17" type="stmt"/>
+        <line num="24" count="17" type="stmt"/>
+        <line num="25" count="17" type="stmt"/>
+        <line num="27" count="17" type="stmt"/>
+        <line num="28" count="17" type="stmt"/>
         <line num="29" count="17" type="stmt"/>
-        <line num="42" count="0" type="stmt"/>
-        <line num="43" count="0" type="stmt"/>
+        <line num="32" count="17" type="stmt"/>
+        <line num="38" count="17" type="stmt"/>
+        <line num="54" count="0" type="stmt"/>
+        <line num="55" count="0" type="stmt"/>
       </file>
       <file name="Passport.ts" path="/Users/aangeles/Desktop/projects/demo/google_do_follow_search/server/src/providers/Passport.ts">
         <metrics statements="23" coveredstatements="16" conditionals="6" coveredconditionals="3" methods="9" coveredmethods="6"/>

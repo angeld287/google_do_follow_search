@@ -19,6 +19,15 @@ class Locals {
         const appSecret = process.env.APP_SECRET || 'secret_key';
         const apiPrefix = process.env.API_PREFIX || 'api';
 
+        //https://www.googleapis.com/customsearch/v1?key=AIzaSyCyw0xtlbcJiaRUDB3bNWbkcW2IJWprrbc&cx=023b4f4fbb0dc9628&num=10&start=0&q=
+        const GSKey = "AIzaSyCyw0xtlbcJiaRUDB3bNWbkcW2IJWprrbc"
+        const GSCx = "023b4f4fbb0dc9628"
+        const GSLimit = "10"
+
+        const GSUrl = "https://www.googleapis.com/customsearch/v1?key=" + GSKey + "&cx=" + GSCx + "&num=" + GSLimit
+        const GSStartKeyword = "&start="
+        const GSQueryKeyword = "&q="
+
         //allow origin cors
         const urls = [
             'http://localhost:3000',
@@ -31,7 +40,10 @@ class Locals {
             appSecret,
             port,
             dbUrl: DATABASE_URL,
-            urls
+            urls,
+            GSUrl,
+            GSStartKeyword,
+            GSQueryKeyword,
         }
     }
 
