@@ -15,13 +15,13 @@ class googleSearchService implements IGoogleSearchService {
     * @param text: the text to find in google SE
     * @return the google list of results with 10 items
     */
-    async getSearch(text: string): Promise<any | ErrorConstructor> {
+    async getSearch(text: string, index: number): Promise<any | ErrorConstructor> {
         let result = null;
         try {
 
             const { GSUrl, GSStartKeyword, GSQueryKeyword } = Locals.config()
 
-            const searchUrl = GSUrl + GSStartKeyword + "0" + GSQueryKeyword + text;
+            const searchUrl = GSUrl + GSStartKeyword + index.toString() + GSQueryKeyword + text;
 
             const response = await fetch(searchUrl);
             result = await response.json();

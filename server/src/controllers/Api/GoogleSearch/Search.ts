@@ -34,9 +34,9 @@ class Search {
             let user: IGoogleSearchService = new googleSearchService();
 
             const text = encodeURIComponent(req.body.text);
-            let index = 0
+            let index = parseInt(req.body.index);
 
-            const search = await user.getSearch(text);
+            const search = await user.getSearch(text, index);
             let results: Array<GoogleSearchResult> = [];
 
             search.forEach(result => {

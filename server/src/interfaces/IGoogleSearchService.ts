@@ -6,7 +6,7 @@
 
 export interface IGoogleSearchService {
 
-    getSearch(text: string): Promise<any>;
+    getSearch(text: string, index: number): Promise<any>;
 
     getNextSearch(text: string, nextIndex: number): Promise<any>;
 
