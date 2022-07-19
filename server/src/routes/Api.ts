@@ -13,6 +13,8 @@ import PageSource from '../controllers/Api/Pages/PageSource';
 import Passport from '../providers/Passport';
 import Session from '../controllers/Api/Auth/Session';
 import Search from '../controllers/Api/GoogleSearch/Search';
+import SearchNextPage from '../controllers/Api/GoogleSearch/SearchNextPage';
+import SearchPreviousPage from '../controllers/Api/GoogleSearch/SearchPreviousPage';
 
 const router = Router();
 
@@ -75,7 +77,7 @@ router.post(
     body('text', 'The field text is empty.').notEmpty(),
     body('nextIndex', 'The field nextIndex is empty.').notEmpty(),
     //Passport.isAuthenticated,
-    Search.perform
+    SearchNextPage.perform
 );
 
 router.post(
@@ -83,7 +85,7 @@ router.post(
     body('text', 'The field text is empty.').notEmpty(),
     body('previousIndex', 'The field previousIndex is empty.').notEmpty(),
     //Passport.isAuthenticated,
-    Search.perform
+    SearchPreviousPage.perform
 );
 
 router.get(

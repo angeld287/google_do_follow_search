@@ -23,7 +23,6 @@ class googleSearchService implements IGoogleSearchService {
 
             const searchUrl = GSUrl + GSStartKeyword + "0" + GSQueryKeyword + text;
 
-
             const response = await fetch(searchUrl);
             result = await response.json();
 
@@ -45,9 +44,10 @@ class googleSearchService implements IGoogleSearchService {
             const { GSUrl, GSStartKeyword, GSQueryKeyword } = Locals.config()
 
             const searchUrl = GSUrl + GSStartKeyword + nextIndex + GSQueryKeyword + text;
-            result = await fetch(searchUrl);
+            const response = await fetch(searchUrl);
+            result = await response.json();
 
-            return result
+            return result.items
         } catch (error) {
             throw new Error(error.message);
         }
@@ -65,9 +65,10 @@ class googleSearchService implements IGoogleSearchService {
             const { GSUrl, GSStartKeyword, GSQueryKeyword } = Locals.config()
 
             const searchUrl = GSUrl + GSStartKeyword + previewsIndex + GSQueryKeyword + text;
-            result = await fetch(searchUrl);
+            const response = await fetch(searchUrl);
+            result = await response.json();
 
-            return result
+            return result.items
         } catch (error) {
             throw new Error(error.message);
         }

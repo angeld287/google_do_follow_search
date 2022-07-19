@@ -6,7 +6,7 @@
 
 import Log from '../../../middlewares/Log';
 import { IResponse, IRequest, INext } from '../../../interfaces/vendors';
-import { AuthFailureResponse, SuccessResponse } from '../../../core/ApiResponse';
+import { InternalErrorResponse, SuccessResponse } from '../../../core/ApiResponse';
 import ExpressValidator from '../../../providers/ExpressValidation';
 import googleSearchService from '../../../services/googleSearchService';
 import IGoogleSearchService from '../../../interfaces/IGoogleSearchService';
@@ -34,12 +34,14 @@ class Search {
             let user: IGoogleSearchService = new googleSearchService();
 
             const text = encodeURIComponent(req.body.text);
+            let index = 0
 
             const search = await user.getSearch(text);
             let results: Array<GoogleSearchResult> = [];
 
             search.forEach(result => {
                 results.push({
+                    position: index,
                     kind: result.kind,
                     title: result.title,
                     htmlTitle: result.htmlTitle,
@@ -51,6 +53,7 @@ class Search {
                     formattedUrl: result.formattedUrl,
                     htmlFormattedUrl: result.htmlFormattedUrl,
                 })
+                index++
             })
 
             return new SuccessResponse('Success', {
@@ -59,7 +62,7 @@ class Search {
 
         } catch (error) {
             Log.error(`Internal Server Error ` + error);
-            return new AuthFailureResponse('Validation Error', {
+            return new InternalErrorResponse('Validation Error', {
                 error: 'Internal Server Error',
             }).send(res);
         }
