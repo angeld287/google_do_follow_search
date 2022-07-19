@@ -1,4 +1,5 @@
 interface GoogleSearchResult {
+    position: number
     kind: string;
     title: string;
     htmlTitle: string;
