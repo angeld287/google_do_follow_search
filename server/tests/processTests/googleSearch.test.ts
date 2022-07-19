@@ -33,8 +33,7 @@ describe('Test googleSearch', () => {
 
     const body = {
         text: "google SEO",
-        nextIndex: 0,
-        previousIndex: 0,
+        index: 0,
     }
 
     test('It must show "You are not authenticated!" when the user did not logged in.', async () => {
@@ -47,7 +46,7 @@ describe('Test googleSearch', () => {
         expect(response.body.data.message).toStrictEqual("You are not authenticated!");
     });
 
-    test('It must show "The field text is empty." when the search input is empty', async () => {
+    test('It must show "The field text is empty." when the field text is empty', async () => {
         const loginResponse = await request(app)
             .post('/api/auth/login')
             .send(user)
@@ -108,7 +107,7 @@ describe('Test googleSearch', () => {
         expect(logoutresponse.body.data.session).toBeUndefined()
     });
 
-    test('It must return the next 10 results on nextPage request', async () => {
+    test('It must return the next 10 results when sets the index to 10', async () => {
 
         const loginResponse = await request(app)
             .post('/api/auth/login')
@@ -128,16 +127,14 @@ describe('Test googleSearch', () => {
             .expect(200);
 
         expect(response.body.data.success).toBe(true);
-        expect(response.body.data.response.length).toBe(10);
 
+        body.index = 10
         const responseNext = await request(app)
-            .post('/api/nextPage')
+            .post('/api/search')
             .set('Cookie', loginResponse.header['set-cookie'])
             .send(body)
             .expect('Content-Type', /json/)
             .expect(200);
-
-        body.nextIndex = 10
 
         expect(responseNext.body.data.success).toBe(true);
         expect(responseNext.body.data.response.length).toBe(10);
@@ -152,7 +149,7 @@ describe('Test googleSearch', () => {
 
     });
 
-    test('It must return the previews 10 results on previewPage request', async () => {
+    test('It must return the previews 10 results when sets index to 0', async () => {
         const loginResponse = await request(app)
             .post('/api/auth/login')
             .send(user)
@@ -173,10 +170,10 @@ describe('Test googleSearch', () => {
         expect(response.body.data.success).toBe(true);
         expect(response.body.data.response.length).toBe(10);
 
-        body.nextIndex = 10
+        body.index = 10
 
         const responseNext = await request(app)
-            .post('/api/nextPage')
+            .post('/api/search')
             .set('Cookie', loginResponse.header['set-cookie'])
             .send(body)
             .expect('Content-Type', /json/)
@@ -185,7 +182,8 @@ describe('Test googleSearch', () => {
         expect(responseNext.body.data.success).toBe(true);
         expect(responseNext.body.data.response.length).toBe(10);
 
-        body.previousIndex = 0
+        body.index = 0
+
         const responsePrevious = await request(app)
             .post('/api/previousPage')
             .set('Cookie', loginResponse.header['set-cookie'])
