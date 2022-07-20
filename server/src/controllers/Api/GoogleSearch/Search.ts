@@ -12,7 +12,6 @@ import googleSearchService from '../../../services/googleSearchService';
 import IGoogleSearchService from '../../../interfaces/IGoogleSearchService';
 import GoogleSearchResult from '../../../interfaces/models/GoogleSearchResult';
 
-
 class Search {
 
     /**
@@ -57,6 +56,7 @@ class Search {
             })
 
             return new SuccessResponse('Success', {
+                success: true,
                 results
             }).send(res);
 

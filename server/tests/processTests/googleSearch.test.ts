@@ -5,6 +5,10 @@ import Locals from '../../src/providers/Locals';
 import session from 'express-session';
 import Passport from '../../src/providers/Passport';
 import passport from 'passport';
+import { setupServer } from 'msw/node'
+import searchHandlers from './searchHandlers';
+
+const server = setupServer(...searchHandlers)
 
 let app: express.Application = express();
 app.use(express.json());
@@ -25,6 +29,14 @@ app = Passport.mountPackage(app, passport);
 app = Routes.mountApi(app);
 
 describe('Test googleSearch', () => {
+
+    beforeAll(() => server.listen({
+        onUnhandledRequest: 'bypass',
+    }));
+
+    beforeEach(() => server.resetHandlers());
+
+    afterAll(() => server.close())
 
     const user = {
         username: "existingadmin@test.com",
@@ -64,8 +76,6 @@ describe('Test googleSearch', () => {
             .expect('Content-Type', /json/)
             .expect(200);
 
-        expect(response.body.data.success).toBe(true);
-
         if (response.body.errors !== undefined) {
             expect(response.body.errors[0].message).toStrictEqual("The field text is empty.");
         }
@@ -96,7 +106,7 @@ describe('Test googleSearch', () => {
             .expect(200);
 
         expect(response.body.data.success).toBe(true);
-        expect(response.body.data.response.length).toBe(10);
+        expect(response.body.data.results.length).toBe(10);
 
         const logoutresponse = await request(app)
             .post('/api/auth/logout')
@@ -137,7 +147,7 @@ describe('Test googleSearch', () => {
             .expect(200);
 
         expect(responseNext.body.data.success).toBe(true);
-        expect(responseNext.body.data.response.length).toBe(10);
+        expect(responseNext.body.data.results.length).toBe(10);
 
         const logoutresponse = await request(app)
             .post('/api/auth/logout')
@@ -168,7 +178,7 @@ describe('Test googleSearch', () => {
             .expect(200);
 
         expect(response.body.data.success).toBe(true);
-        expect(response.body.data.response.length).toBe(10);
+        expect(response.body.data.results.length).toBe(10);
 
         body.index = 10
 
@@ -180,20 +190,20 @@ describe('Test googleSearch', () => {
             .expect(200);
 
         expect(responseNext.body.data.success).toBe(true);
-        expect(responseNext.body.data.response.length).toBe(10);
+        expect(responseNext.body.data.results.length).toBe(10);
 
         body.index = 0
 
         const responsePrevious = await request(app)
-            .post('/api/previousPage')
+            .post('/api/search')
             .set('Cookie', loginResponse.header['set-cookie'])
             .send(body)
             .expect('Content-Type', /json/)
             .expect(200);
 
         expect(responsePrevious.body.data.success).toBe(true);
-        expect(responsePrevious.body.data.response.length).toBe(10);
-        expect(responsePrevious.body.data.response[0].title).toEqual(response.body.data.response[0].title);
+        expect(responsePrevious.body.data.results.length).toBe(10);
+        expect(responsePrevious.body.data.results[0].title).toEqual(response.body.data.results[0].title);
 
         const logoutresponse = await request(app)
             .post('/api/auth/logout')
