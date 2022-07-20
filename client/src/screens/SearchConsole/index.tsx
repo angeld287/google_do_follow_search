@@ -1,7 +1,21 @@
-import React from 'react';
+import { Content } from 'antd/lib/layout/layout';
+import React, { useState } from 'react';
+import CustomSearch from '../../components/CustomSearch';
+import styles from './styles';
 
 const SearchConsole: React.FC = () => {
-    return (<h1>Welcome to home page!</h1>);
+    const [loading, setLoading] = useState(false);
+    const onSearch = (value: string) => {
+        setLoading(true);
+        console.log(value)
+        setLoading(false);
+    }
+    return (
+        <Content style={styles.container}>
+            <h1>G🅾️🅾️🇬le Do Follow 👉 SEARCH 🔍 📙</h1>
+            <CustomSearch placeholder='Type the long keyword' onSearch={onSearch} loading={loading} />
+        </Content>
+    );
 };
 
 export default SearchConsole;

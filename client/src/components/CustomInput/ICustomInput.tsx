@@ -1,10 +1,6 @@
-import { ChangeEventHandler } from "react";
+import { InputProps } from "antd";
 
-export interface ICustomInput {
+export interface ICustomInput extends InputProps {
     dataTestId: string,
-    onChange: ChangeEventHandler,
-    value: string,
     label: string,
-    readOnly: boolean,
-    type: string
 }
