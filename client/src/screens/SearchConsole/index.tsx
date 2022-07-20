@@ -6,8 +6,11 @@ import styles from './styles';
 const SearchConsole: React.FC = () => {
     const [loading, setLoading] = useState(false);
     const onSearch = (value: string) => {
+        if (value === '')
+            return null
         setLoading(true);
         console.log(value)
+        console.log('value')
         setLoading(false);
     }
     return (
