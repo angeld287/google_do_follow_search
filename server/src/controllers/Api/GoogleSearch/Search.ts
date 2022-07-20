@@ -12,7 +12,6 @@ import googleSearchService from '../../../services/googleSearchService';
 import IGoogleSearchService from '../../../interfaces/IGoogleSearchService';
 import GoogleSearchResult from '../../../interfaces/models/GoogleSearchResult';
 
-
 class Search {
 
     /**
@@ -34,7 +33,7 @@ class Search {
             let user: IGoogleSearchService = new googleSearchService();
 
             const text = encodeURIComponent(req.body.text);
-            let index = parseInt(req.body.index);
+            let index = req.body.index !== undefined ? parseInt(req.body.index) : 0;
 
             const search = await user.getSearch(text, index);
             let results: Array<GoogleSearchResult> = [];
@@ -57,6 +56,7 @@ class Search {
             })
 
             return new SuccessResponse('Success', {
+                success: true,
                 results
             }).send(res);
 
