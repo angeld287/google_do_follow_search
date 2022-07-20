@@ -170,10 +170,14 @@ describe('Test googleSearch', () => {
 
         body.text = "google SEO"
 
+        const _body = {
+            text: "google SEO"
+        }
+
         const response = await request(app)
             .post('/api/search')
             .set('Cookie', loginResponse.header['set-cookie'])
-            .send(body)
+            .send(_body)
             .expect('Content-Type', /json/)
             .expect(200);
 
