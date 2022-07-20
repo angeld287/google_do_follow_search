@@ -4,6 +4,8 @@ This is a application used to find web pages with dofollow links. The purpose of
 <a href="https://example.com" rel="dofollow">Text</a>
 ```
 
+The server has the enpoint '/api/search' who makes a request to the google service "Custom Search JSON API". With this service we can return the result of a simple google search in json format.
+
 # Run Application with Docker
 
 In this session is explained how to up and down the containers of this application.
