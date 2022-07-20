@@ -5,10 +5,6 @@ import Locals from '../../src/providers/Locals';
 import session from 'express-session';
 import Passport from '../../src/providers/Passport';
 import passport from 'passport';
-import { setupServer } from 'msw/node'
-import searchHandlers from './searchHandlers';
-
-const server = setupServer(...searchHandlers)
 
 let app: express.Application = express();
 app.use(express.json());
@@ -29,14 +25,6 @@ app = Passport.mountPackage(app, passport);
 app = Routes.mountApi(app);
 
 describe('Test googleSearch', () => {
-
-    beforeAll(() => server.listen({
-        onUnhandledRequest: 'bypass',
-    }));
-
-    beforeEach(() => server.resetHandlers());
-
-    afterAll(() => server.close())
 
     const user = {
         username: "existingadmin@test.com",
