@@ -2,7 +2,7 @@ import { Alert } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import CustomCompleteItemList from '../../components/CustomCompleteItemList';
+import CustomList from '../../components/CustomList';
 import CustomSearch from '../../components/CustomSearch';
 import { searchAsync } from '../../features/googleSearch/asyncThunks';
 import { selectSearch } from '../../features/googleSearch/searchSlice';
@@ -48,7 +48,7 @@ const SearchConsole: React.FC = () => {
                 )
             }
 
-            <CustomCompleteItemList />
+            <CustomList />
         </Content>
     );
 };
