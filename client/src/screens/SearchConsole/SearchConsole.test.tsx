@@ -62,4 +62,22 @@ describe("Search Console Test Suite", () => {
             expect(screen.getByText("Please type some keyword.")).toBeInTheDocument();
         });
     });
+
+    test('It must show 10 search results in a list when type "SEO" and clic search.', async () => {
+
+        functions.writeInInputFoundByPlaceHolder(null, /Type the long keyword/i, "SEO");
+
+        await act(() => {
+            fireEvent.click(screen.getAllByText(/Search/i)[1]);
+        });
+
+        await waitFor(() => {
+            component.rerender(
+                <Provider store={store}>
+                    <SearchConsole />
+                </Provider>
+            )
+            expect(screen.getAllByText("Title").length).toBe(10);
+        });
+    });
 });
