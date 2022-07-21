@@ -1,27 +1,16 @@
 import { Avatar, List } from 'antd';
 import React from 'react';
+import { ICustomList } from './ICustomList';
 import styles from './styles'
-const data = [
-    {
-        title: 'Ant Design Title 1',
-    },
-    {
-        title: 'Ant Design Title 2',
-    },
-    {
-        title: 'Ant Design Title 3',
-    },
-    {
-        title: 'Ant Design Title 4',
-    },
-];
 
-const CustomList = () => (
+const CustomList: React.FC<ICustomList> = ({ data }) => (
     <List
         itemLayout="horizontal"
         dataSource={data}
         renderItem={(item) => (
-            <List.Item>
+            <List.Item
+                actions={[<a key="list-loadmore-edit">edit</a>, <a key="list-loadmore-more">more</a>]}
+            >
                 <List.Item.Meta
                     avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
                     title={<a href="https://ant.design">{item.title}</a>}

@@ -37,7 +37,7 @@ const SearchConsole: React.FC = () => {
 
     return (
         <Content style={styles.container}>
-            <h1>G🅾️🅾️🇬le Do Follow 👉 SEARCH 🔍 📙</h1>
+            <h1>G🅾️🅾️🇬le 🔙Links 🔗 👉 SEARCH 🔍 📙</h1>
             <CustomSearch placeholder='Type the long keyword' onSearch={onSearch} loading={session.status === 'pending'} />
             {
                 error &&
@@ -47,8 +47,10 @@ const SearchConsole: React.FC = () => {
                     </div>
                 )
             }
+            {(session.results.length !== 0) &&
+                <CustomList data={session.results} />
+            }
 
-            <CustomList />
         </Content>
     );
 };

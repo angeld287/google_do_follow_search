@@ -15,7 +15,7 @@ function App() {
   const register = useAppSelector(selectUserRegister);
   const dispatch = useAppDispatch();
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let didCancel = false;
