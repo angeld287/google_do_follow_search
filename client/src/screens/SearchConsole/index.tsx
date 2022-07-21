@@ -1,7 +1,8 @@
 import { Alert } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import CustomCompleteItemList from '../../components/CustomCompleteItemList';
 import CustomSearch from '../../components/CustomSearch';
 import { searchAsync } from '../../features/googleSearch/asyncThunks';
 import { selectSearch } from '../../features/googleSearch/searchSlice';
@@ -13,22 +14,26 @@ const SearchConsole: React.FC = () => {
     const dispatch = useAppDispatch()
     const [error, setError] = useState(false);
     const [index, setIndex] = useState(0);
+    const [value, setValue] = useState("");
 
     useEffect(() => {
-
         console.log(session.results)
-
     }, [session.results])
 
-    const onSearch = (text: string) => {
+    useEffect(() => {
+        dispatch(searchAsync({ text: value, index: index }))
+    }, [index])
+
+    const onSearch = useCallback((text: string) => {
         setError(false)
         if (text === '') {
             setError(true)
             return null
         }
-        dispatch(searchAsync({ text, index }))
-        console.log(session.results)
-    }
+
+        setValue(text)
+        dispatch(searchAsync({ text, index: 0 }))
+    }, [dispatch]);
 
     return (
         <Content style={styles.container}>
@@ -42,8 +47,10 @@ const SearchConsole: React.FC = () => {
                     </div>
                 )
             }
+
+            <CustomCompleteItemList />
         </Content>
     );
 };
 
-export default SearchConsole;
+export default React.memo(SearchConsole);
