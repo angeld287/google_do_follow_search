@@ -26,6 +26,7 @@ class Search {
 
             if (!errors.isEmpty()) {
                 return new SuccessResponse('Success', {
+                    success: false,
                     errors: errors.array()
                 }).send(res);
             }
@@ -33,7 +34,7 @@ class Search {
             let user: IGoogleSearchService = new googleSearchService();
 
             const text = encodeURIComponent(req.body.text);
-            let index = req.body.index !== undefined ? parseInt(req.body.index) : 0;
+            let index = req.body.index ? parseInt(req.body.index) : 0;
 
             const search = await user.getSearch(text, index);
             let results: Array<GoogleSearchResult> = [];
@@ -63,6 +64,7 @@ class Search {
         } catch (error) {
             Log.error(`Internal Server Error ` + error);
             return new InternalErrorResponse('Validation Error', {
+                success: false,
                 error: 'Internal Server Error',
             }).send(res);
         }

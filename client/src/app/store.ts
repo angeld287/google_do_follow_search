@@ -2,12 +2,14 @@ import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import counterReducer from '../features/counter/counterSlice';
 import userSessionReducer from '../features/userSession/userSessionSlice';
 import userRegisterReducer from '../features/userRegister/userRegisterSlice';
+import userSearchSlice from '../features/googleSearch/searchSlice';
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
     userSession: userSessionReducer,
-    userRegister: userRegisterReducer
+    userRegister: userRegisterReducer,
+    googleSearch: userSearchSlice,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({
     serializableCheck: false
