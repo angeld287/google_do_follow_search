@@ -26,6 +26,7 @@ class Search {
 
             if (!errors.isEmpty()) {
                 return new SuccessResponse('Success', {
+                    success: false,
                     errors: errors.array()
                 }).send(res);
             }
@@ -63,6 +64,7 @@ class Search {
         } catch (error) {
             Log.error(`Internal Server Error ` + error);
             return new InternalErrorResponse('Validation Error', {
+                success: false,
                 error: 'Internal Server Error',
             }).send(res);
         }
