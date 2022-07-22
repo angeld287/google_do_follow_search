@@ -34,13 +34,13 @@ const SearchConsole: React.FC = () => {
         let _index = index - 10;
         setIndex(_index)
         dispatch(searchAsync({ text: value, index: _index }))
-    }, [])
+    }, [dispatch, value, index])
 
     const getNextItems = useCallback(() => {
         let _index = index + 10;
         setIndex(_index)
         dispatch(searchAsync({ text: value, index: _index }))
-    }, [])
+    }, [dispatch, value, index])
 
     return (
         <Content style={styles.container}>
