@@ -19,13 +19,16 @@ class searchService implements ISearchService {
             });
             return await userFetch;
         } catch (error) {
-            return new Promise<IResponse>(() => ({
+            let errorResult: IResponse = {
                 status: ResponseStatus.INTERNAL_ERROR,
                 message: 'Internal Application Error',
                 statusCode: StatusCode.FAILURE,
-                data: error
-            })
-            );
+                data: {
+                    success: false,
+                    error
+                }
+            }
+            return errorResult
         }
     }
 }

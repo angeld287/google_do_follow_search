@@ -9,11 +9,12 @@ const CustomList: React.FC<ICustomList> = ({ data }) => (
         dataSource={data}
         renderItem={(item) => (
             <List.Item
-                actions={[<a key="list-loadmore-edit">edit</a>, <a key="list-loadmore-more">more</a>]}
+                key={"item-position-" + item.position}
+                actions={[<a key="list-loadmore-edit-">edit</a>, <a key="list-loadmore-more">more</a>]}
             >
                 <List.Item.Meta
                     avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                    title={<a href="https://ant.design">{item.title}</a>}
+                    title={<><p>Title: </p><a href="https://ant.design">{item.title + " " + data.length}</a></>}
                     description="Ant Design, a design language for background applications, is refined by Ant UED Team"
                 />
             </List.Item>

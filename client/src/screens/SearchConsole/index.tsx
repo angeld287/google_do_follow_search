@@ -16,14 +16,6 @@ const SearchConsole: React.FC = () => {
     const [index, setIndex] = useState(0);
     const [value, setValue] = useState("");
 
-    useEffect(() => {
-        console.log(session.results)
-    }, [session.results])
-
-    useEffect(() => {
-        dispatch(searchAsync({ text: value, index: index }))
-    }, [index])
-
     const onSearch = useCallback((text: string) => {
         setError(false)
         if (text === '') {

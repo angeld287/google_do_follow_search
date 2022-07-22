@@ -64,7 +64,7 @@ describe("Search Console Test Suite", () => {
     });
 
     test('It must show 10 search results in a list when type "SEO" and clic search.', async () => {
-
+        const { rerender } = component
         functions.writeInInputFoundByPlaceHolder(null, /Type the long keyword/i, "SEO");
 
         await act(() => {
@@ -72,12 +72,13 @@ describe("Search Console Test Suite", () => {
         });
 
         await waitFor(() => {
-            component.rerender(
+            rerender(
                 <Provider store={store}>
                     <SearchConsole />
                 </Provider>
             )
-            expect(screen.getAllByText("Title").length).toBe(10);
+
+            expect(screen.getAllByText("Title:").length).toBe(10);
         });
     });
 });
