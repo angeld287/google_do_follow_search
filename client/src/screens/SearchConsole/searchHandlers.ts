@@ -9,8 +9,8 @@ const search = _rest.post('http://localhost:3000/api/search', (req, res, ctx) =>
     _result = {
         success: true,
         results: [
-            { title: 'Test 2', position: 2 },
             { title: 'Test 1', position: 1 },
+            { title: 'Test 2', position: 2 },
             { title: 'Test 3', position: 3 },
             { title: 'Test 4', position: 4 },
             { title: 'Test 5', position: 5 },

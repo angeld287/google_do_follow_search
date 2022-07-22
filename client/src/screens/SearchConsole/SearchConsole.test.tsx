@@ -43,6 +43,8 @@ describe("Search Console Test Suite", () => {
     test('It must display basic Search Console components', () => {
         expect(component.getByPlaceholderText(/Type the long keyword/i)).toBeInTheDocument();
         expect(component.getAllByText(/Search/i)[0]).toBeInTheDocument();
+        expect(component.getAllByText(/Previous/i)[0]).toBeInTheDocument();
+        expect(component.getAllByText(/Next/i)[0]).toBeInTheDocument();
     });
 
     test('It must respond "Please type some keyword." when the input is blank.', async () => {
