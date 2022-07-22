@@ -7,6 +7,12 @@ const styles = {
         justifyContent: "center",
         alignItems: "center",
     } as React.CSSProperties,
+    buttons: {
+        textAlign: 'right'
+    } as React.CSSProperties,
+    button: {
+        marginRight: 5
+    } as React.CSSProperties,
 };
 
 export default styles;

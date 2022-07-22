@@ -7,7 +7,7 @@ exports[`Search Console Test Suite It must render the component correcly 1`] = `
     style="width: 70%; margin: 50px auto; background-color: white; flex-direction: column; justify-content: center; align-items: center;"
   >
     <h1>
-      G🅾️🅾️🇬le Do Follow 👉 SEARCH 🔍 📙
+      G🅾️🅾️🇬le 🔙Links 🔗 👉 SEARCH 🔍 📙
     </h1>
     <span
       class="ant-input-group-wrapper ant-input-search ant-input-search-large ant-input-search-with-button ant-input-group-wrapper-lg"

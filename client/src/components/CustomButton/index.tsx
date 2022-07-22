@@ -2,7 +2,7 @@ import { Button } from 'antd';
 import React, { FC } from 'react'
 import { ICustomButton } from './ICustomButton';
 
-const CustomButton: FC<ICustomButton> = ({ color, type, _key, onClick, className, children, loading, htmlType }) => {
+const CustomButton: FC<ICustomButton> = ({ color, type, _key, onClick, className, children, loading, htmlType, icon }) => {
     return <Button
         style={{ color: color }}
         type={type}
@@ -11,6 +11,7 @@ const CustomButton: FC<ICustomButton> = ({ color, type, _key, onClick, className
         onClick={onClick}
         className={className}
         htmlType={htmlType}
+        icon={icon}
     >
         {children}
     </Button>
