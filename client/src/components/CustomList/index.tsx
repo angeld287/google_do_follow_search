@@ -1,7 +1,6 @@
 import { Avatar, List } from 'antd';
 import React from 'react';
 import { ICustomList } from './ICustomList';
-import styles from './styles'
 
 const CustomList: React.FC<ICustomList> = ({ data }) => (
     <List
@@ -22,4 +21,4 @@ const CustomList: React.FC<ICustomList> = ({ data }) => (
     />
 );
 
-export default CustomList;
+export default React.memo(CustomList);

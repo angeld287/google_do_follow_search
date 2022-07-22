@@ -1,7 +1,9 @@
+import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
 import { Alert } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import CustomButton from '../../components/CustomButton';
 import CustomList from '../../components/CustomList';
 import CustomSearch from '../../components/CustomSearch';
 import { searchAsync } from '../../features/googleSearch/asyncThunks';
@@ -18,6 +20,7 @@ const SearchConsole: React.FC = () => {
 
     const onSearch = useCallback((text: string) => {
         setError(false)
+        setIndex(0)
         if (text === '') {
             setError(true)
             return null
@@ -26,6 +29,18 @@ const SearchConsole: React.FC = () => {
         setValue(text)
         dispatch(searchAsync({ text, index: 0 }))
     }, [dispatch]);
+
+    const getPreviousItems = useCallback(() => {
+        let _index = index - 10;
+        setIndex(_index)
+        dispatch(searchAsync({ text: value, index: _index }))
+    }, [])
+
+    const getNextItems = useCallback(() => {
+        let _index = index + 10;
+        setIndex(_index)
+        dispatch(searchAsync({ text: value, index: _index }))
+    }, [])
 
     return (
         <Content style={styles.container}>
@@ -40,7 +55,13 @@ const SearchConsole: React.FC = () => {
                 )
             }
             {(session.results.length !== 0) &&
-                <CustomList data={session.results} />
+                <>
+                    <CustomList data={session.results} />
+                    <div style={styles.buttons}>
+                        <CustomButton onClick={getPreviousItems} icon={<DoubleLeftOutlined />} customStyle={styles.button} htmlType="button" _key="btn-previous" disabled={(session.results.length === 0 || index === 0)} color="blue">Previous</CustomButton>
+                        <CustomButton onClick={getNextItems} customStyle={styles.button} htmlType="button" _key="btn-next" disabled={session.results.length === 0} color="blue">Next <DoubleRightOutlined /></CustomButton>
+                    </div>
+                </>
             }
 
         </Content>
