@@ -6,7 +6,7 @@ import { IPageSourceProps } from "./IPageSource";
 const pageSourceService: IPageSourceService = new PageSourceService();
 
 export const getPageSourceAsync = createAsyncThunk(
-    'googleSearch/search',
+    'pageSource/getPageSource',
     async (args: IPageSourceProps) => {
         return await pageSourceService.getPageSource(args.url);
     }
