@@ -33,7 +33,7 @@ const SearchConsole: React.FC = () => {
             setError('An internal error ocurred.')
         }
 
-    }, [dispatch]);
+    }, [dispatch, search.error]);
 
     const getPreviousItems = useCallback(() => {
         let _index = index - 10;
