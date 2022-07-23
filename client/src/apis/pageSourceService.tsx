@@ -1,23 +1,23 @@
-import ISearchService from "../interfaces/ISearchService";
+import IPageSourceService from "../interfaces/IPageSourceService";
 import { IResponse, ResponseStatus, StatusCode } from "../interfaces/models/IResponse";
 import { fetcher } from "../utils/fetch-utils";
 import Locals from "../utils/locals";
 
-class searchService implements ISearchService {
+class pageSourceService implements IPageSourceService {
     private url: string = Locals.config().server_url;
 
-    async search(text: string, index: number): Promise<IResponse> {
+    async getPageSource(url: string): Promise<IResponse> {
         try {
-            const searchFetch = await fetcher(this.url + '/api/search', {
+            const pageSpurceFetch = await fetcher(this.url + '/api/getPageSource', {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ text, index })
+                body: JSON.stringify({ url })
             });
-            return await searchFetch;
+            return await pageSpurceFetch;
         } catch (error) {
             let errorResult: IResponse = {
                 status: ResponseStatus.INTERNAL_ERROR,
@@ -32,4 +32,4 @@ class searchService implements ISearchService {
         }
     }
 }
-export default searchService;
+export default pageSourceService;
