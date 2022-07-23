@@ -18,8 +18,8 @@ const CustomList: React.FC<ICustomList> = ({ data }) => (
             >
                 <List.Item.Meta
                     avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                    title={<><p>Title: </p><a href="https://ant.design">{item.title}</a></>}
-                    description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                    title={<><p>Title: </p><a href={item.link}>{item.title}</a></>}
+                    description={item.htmlSnippet}
                 />
             </List.Item>
         )}

@@ -12,9 +12,9 @@ import styles from './styles';
 
 const SearchConsole: React.FC = () => {
 
-    const session = useAppSelector(selectSearch);
+    const search = useAppSelector(selectSearch);
     const dispatch = useAppDispatch()
-    const [error, setError] = useState(false);
+    const [error, setError] = useState<boolean | string>(false);
     const [index, setIndex] = useState(0);
     const [value, setValue] = useState("");
 
@@ -22,12 +22,17 @@ const SearchConsole: React.FC = () => {
         setError(false)
         setIndex(0)
         if (text === '') {
-            setError(true)
+            setError('Please type some keyword.')
             return null
         }
 
         setValue(text)
         dispatch(searchAsync({ text, index: 0 }))
+
+        if (search.error !== undefined) {
+            setError('An internal error ocurred.')
+        }
+
     }, [dispatch]);
 
     const getPreviousItems = useCallback(() => {
@@ -45,21 +50,21 @@ const SearchConsole: React.FC = () => {
     return (
         <Content style={styles.container}>
             <h1>G🅾️🅾️🇬le 🔙Links 🔗 👉 SEARCH 🔍 📙</h1>
-            <CustomSearch placeholder='Type the long keyword' onSearch={onSearch} loading={session.status === 'pending'} />
+            <CustomSearch placeholder='Type the long keyword' onSearch={onSearch} loading={search.status === 'pending'} />
             {
-                error &&
+                error !== false &&
                 (
                     <div style={{ textAlign: 'right' }}>
-                        <Alert message="Please type some keyword." type="error" />
+                        <Alert message={error} type="error" />
                     </div>
                 )
             }
-            {(session.results.length !== 0) &&
+            {(search.results.length !== 0) &&
                 <>
-                    <CustomList data={session.results} />
+                    <CustomList data={search.results} />
                     <div style={styles.buttons}>
-                        <CustomButton onClick={getPreviousItems} icon={<DoubleLeftOutlined />} customStyle={styles.button} htmlType="button" _key="btn-previous" disabled={(session.results.length === 0 || index === 0)} color="blue">Previous</CustomButton>
-                        <CustomButton onClick={getNextItems} customStyle={styles.button} htmlType="button" _key="btn-next" disabled={session.results.length === 0} color="blue">Next <DoubleRightOutlined /></CustomButton>
+                        <CustomButton onClick={getPreviousItems} icon={<DoubleLeftOutlined />} customStyle={styles.button} htmlType="button" _key="btn-previous" disabled={(search.results.length === 0 || index === 0)} color="blue">Previous</CustomButton>
+                        <CustomButton onClick={getNextItems} customStyle={styles.button} htmlType="button" _key="btn-next" disabled={search.results.length === 0} color="blue">Next <DoubleRightOutlined /></CustomButton>
                     </div>
                 </>
             }
