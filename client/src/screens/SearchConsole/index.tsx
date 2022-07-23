@@ -4,7 +4,7 @@ import { Content } from 'antd/lib/layout/layout';
 import React, { useCallback, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import CustomButton from '../../components/CustomButton';
-import CustomList from '../../components/CustomList';
+import GoogleResultsList from '../../components/GoogleResultsList';
 import CustomSearch from '../../components/CustomSearch';
 import { searchAsync } from '../../features/googleSearch/asyncThunks';
 import { selectSearch } from '../../features/googleSearch/searchSlice';
@@ -61,7 +61,7 @@ const SearchConsole: React.FC = () => {
             }
             {(search.results.length !== 0) &&
                 <>
-                    <CustomList data={search.results} />
+                    <GoogleResultsList data={search.results} />
                     <div style={styles.buttons}>
                         <CustomButton onClick={getPreviousItems} icon={<DoubleLeftOutlined />} customStyle={styles.button} htmlType="button" _key="btn-previous" disabled={(search.results.length === 0 || index === 0)} color="blue">Previous</CustomButton>
                         <CustomButton onClick={getNextItems} customStyle={styles.button} htmlType="button" _key="btn-next" disabled={search.results.length === 0} color="blue">Next <DoubleRightOutlined /></CustomButton>
