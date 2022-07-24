@@ -1,4 +1,4 @@
-import { EditOutlined, MoreOutlined } from '@ant-design/icons';
+import { EditOutlined, LoadingOutlined, MoreOutlined } from '@ant-design/icons';
 import { Avatar, List, Row, Tag } from 'antd';
 import React, { useCallback, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
@@ -19,6 +19,10 @@ const GoogleResultsList: React.FC<IGoogleSearchResult> = ({ position, snippet, l
         window.location.href = link;
     }, [])
 
+    const FollowTag = useCallback(() => (pageSource.status === 'pending') ? <LoadingOutlined /> : (
+        <Tag color="#f50">do follow rel</Tag>
+    ), [pageSource.status])
+
     return (
         <List.Item
             key={"item-position-" + position}
@@ -31,13 +35,8 @@ const GoogleResultsList: React.FC<IGoogleSearchResult> = ({ position, snippet, l
                 title={<Row><p>Title: </p><a target="_blank" href={link}>{title}</a></Row>}
                 description={<> <FollowTag /> {snippet}</>}
             />
-            {/* <LoadingOutlined /> */}
         </List.Item>
     )
 };
-
-const FollowTag: React.FC<any> = ({ }) => (
-    <Tag color="#f50">do follow rel</Tag>
-)
 
 export default React.memo(GoogleResultsList);
