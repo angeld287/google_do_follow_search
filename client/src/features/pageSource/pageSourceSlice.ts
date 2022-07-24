@@ -25,11 +25,13 @@ export const pageSourceSlice = createSlice({
       })
       .addCase(getPageSourceAsync.fulfilled, (state, action) => {
         let data = action.payload.data;
-
         if (data.success) {
           state.results = {
             statusCode: data.response.statusCode,
-            body: data.response.body
+            body: data.response.body,
+            hasDoFollow: data.response.hasDofollow,
+            doFollowCount: data.response.doFollow,
+            noFollowCount: data.response.noFollow,
           };
           state.error = initialState.error;
         } else {

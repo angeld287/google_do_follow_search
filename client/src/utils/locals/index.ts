@@ -22,8 +22,15 @@ class Locals {
 
         const server_url = "http://" + server_host + ":" + server_port
 
+        const a_tags_reg_exp = /(<a\s*(?!.*\bnofollow)[^>]*)(href="https?:\/\/)((?!(?:(?:www\.)?'.implode('|(?:www\.)?', $follow_list).'))[^"]+)"((?!.*\bnofollow)[^>]*)(?:[^>]*)>/g
+        const follow_reg_exp = /rel=("|')dofollow("|')/g
+        const no_follow_reg_exp = /rel=("|')nofollow("|')/g
+
         return {
-            server_url
+            server_url,
+            a_tags_reg_exp,
+            follow_reg_exp,
+            no_follow_reg_exp
         }
     }
 }
