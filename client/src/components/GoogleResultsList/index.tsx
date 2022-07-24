@@ -7,7 +7,7 @@ const GoogleResultsList: React.FC<IGoogleResultsList> = ({ data }) => (
     <List
         itemLayout="horizontal"
         dataSource={data}
-        renderItem={(item) => <GoogleResultItem position={item.position} htmlSnippet={item.htmlSnippet} link={item.link} title={item.title} />}
+        renderItem={(item) => <GoogleResultItem position={item.position} snippet={item.snippet} link={item.link} title={item.title} />}
     />
 );
 
