@@ -1,13 +1,13 @@
 export interface IGoogleSearchResult {
     position: number
-    kind: string;
+    kind?: string;
     title: string;
-    htmlTitle: string;
+    htmlTitle?: string;
     link: string;
-    displayLink: string;
+    displayLink?: string;
     snippet: string;
-    htmlSnippet: string;
-    cacheId: string;
-    formattedUrl: string;
-    htmlFormattedUrl: string;
+    htmlSnippet?: string;
+    cacheId?: string;
+    formattedUrl?: string;
+    htmlFormattedUrl?: string;
 }

@@ -1,17 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
-import { searchAsync } from './asyncThunks';
-import { ISearchSlice } from './ISearch';
+import { getPageSourceAsync } from './asyncThunks';
+import { IPageSourceSlice } from './IPageSource';
 
-export const initialState: ISearchSlice = {
+export const initialState: IPageSourceSlice = {
   status: 'idle',
-  results: [],
+  results: null,
   error: undefined,
   message: ""
 };
 
-export const searchSlice = createSlice({
-  name: 'googleSearch',
+export const pageSourceSlice = createSlice({
+  name: 'pageSource',
   initialState,
 
   //Actions
@@ -20,14 +20,17 @@ export const searchSlice = createSlice({
   //async operations
   extraReducers: (builder) => {
     builder
-      .addCase(searchAsync.pending, (state) => {
+      .addCase(getPageSourceAsync.pending, (state) => {
         state.status = 'pending';
       })
-      .addCase(searchAsync.fulfilled, (state, action) => {
+      .addCase(getPageSourceAsync.fulfilled, (state, action) => {
         let data = action.payload.data;
 
         if (data.success) {
-          state.results = data.results;
+          state.results = {
+            statusCode: data.response.statusCode,
+            body: data.response.body
+          };
           state.error = initialState.error;
         } else {
           state.results = initialState.results
@@ -35,7 +38,7 @@ export const searchSlice = createSlice({
         }
         state.status = 'idle';
       })
-      .addCase(searchAsync.rejected, (state) => {
+      .addCase(getPageSourceAsync.rejected, (state) => {
         state.status = 'failed';
       })
   },
@@ -44,6 +47,6 @@ export const searchSlice = createSlice({
 //Actions
 //export const { } = userSessionSlice.actions;
 
-export const selectSearch = (state: RootState) => state.googleSearch;
+export const selectPageSource = (state: RootState) => state.pageSource;
 
-export default searchSlice.reducer;
+export default pageSourceSlice.reducer;
