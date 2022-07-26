@@ -1,4 +1,4 @@
-import { EditOutlined, LoadingOutlined, MoreOutlined } from '@ant-design/icons';
+import { LoadingOutlined, MoreOutlined } from '@ant-design/icons';
 import { Avatar, List, Row, Tag } from 'antd';
 import React, { useCallback, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
@@ -14,7 +14,7 @@ const GoogleResultsList: React.FC<IGoogleSearchResult> = ({ position, snippet, l
 
     useEffect(() => {
         dispatch(getPageSourceAsync({ url: link }))
-    }, [link])
+    }, [link, dispatch])
 
     const goToLink = useCallback((link: string) => {
         window.location.href = link;
@@ -26,7 +26,7 @@ const GoogleResultsList: React.FC<IGoogleSearchResult> = ({ position, snippet, l
                 (<Tag color="#f50">No Has Do Follow</Tag>)
             )
         )
-    ), [pageSource.status])
+    ), [pageSource.status, pageSource.results])
 
     return (
         <List.Item
@@ -37,7 +37,7 @@ const GoogleResultsList: React.FC<IGoogleSearchResult> = ({ position, snippet, l
         >
             <List.Item.Meta
                 avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                title={<Row><p>Title: </p><a target="_blank" href={link}>{title}</a></Row>}
+                title={<Row><p>Title: </p><a target="_blank" rel="noreferrer" href={link}>{title}</a></Row>}
                 description={<> <FollowTag /> {snippet}</>}
             />
         </List.Item>
