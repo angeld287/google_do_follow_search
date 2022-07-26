@@ -63,8 +63,8 @@ const SearchConsole: React.FC = () => {
                 <>
                     <GoogleResultsList data={search.results} />
                     <div style={styles.buttons}>
-                        <CustomButton onClick={getPreviousItems} icon={<DoubleLeftOutlined />} customStyle={styles.button} htmlType="button" _key="btn-previous" disabled={(search.results.length === 0 || index === 0)} color="blue">Previous</CustomButton>
-                        <CustomButton onClick={getNextItems} customStyle={styles.button} htmlType="button" _key="btn-next" disabled={search.results.length === 0} color="blue">Next <DoubleRightOutlined /></CustomButton>
+                        <CustomButton onClick={getPreviousItems} icon={<DoubleLeftOutlined />} customStyle={styles.button} htmlType="button" _key="btn-previous" disabled={(search.results.length === 0 || index === 0)} loading={search.status === 'pending'} color="blue">Previous</CustomButton>
+                        <CustomButton onClick={getNextItems} customStyle={styles.button} htmlType="button" _key="btn-next" disabled={search.results.length === 0} loading={search.status === 'pending'} color="blue">Next <DoubleRightOutlined /></CustomButton>
                     </div>
                 </>
             }

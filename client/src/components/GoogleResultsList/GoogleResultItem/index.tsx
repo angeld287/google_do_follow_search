@@ -14,7 +14,7 @@ const GoogleResultsList: React.FC<IGoogleSearchResult> = ({ position, snippet, l
 
     useEffect(() => {
         dispatch(getPageSourceAsync({ url: link }))
-    }, [])
+    }, [link])
 
     const goToLink = useCallback((link: string) => {
         window.location.href = link;
