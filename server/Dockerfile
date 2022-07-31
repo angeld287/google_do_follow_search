@@ -24,4 +24,4 @@ RUN npm ci --only=production
 
 # Run node server
 #CMD npm run start
-CMD ["nodemon", "dist/src/Server.js"]
+CMD ["node", "dist/src/Server.js"]
