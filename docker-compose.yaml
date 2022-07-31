@@ -1,11 +1,11 @@
 # docker-compose.yml
 version: "3"
 services:
-    #client:
-    #    build: ./client
-    #    working_dir: /app
-    #    ports:
-    #        - "8081:80"
+    client:
+        build: ./client
+        working_dir: /app
+        ports:
+            - "8081:80"
 
     server:
         build: ./server
