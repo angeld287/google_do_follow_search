@@ -18,14 +18,16 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "noImplicitAny": false,
   },
   "include": [
     "src"
   ],
   "exclude": [
-    "src/**/*.spec.ts",
-    "src/**/*.test.ts",
-    "src/**/*.test.tsx"
+    "src/**/*.test.tsx",
+    "src/**/*Handlers.ts",
+    "src/utils/test-utils",
+    "src/utils/test-handlers-utils",
   ]
 }
