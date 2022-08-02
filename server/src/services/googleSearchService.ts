@@ -13,6 +13,7 @@ class googleSearchService implements IGoogleSearchService {
     /*
     * Execute a request to find the google search
     * @param text: the text to find in google SE
+    * @param index: the number point where start the google search
     * @return the google list of results with 10 items
     */
     async getSearch(text: string, index: number): Promise<any | ErrorConstructor> {
