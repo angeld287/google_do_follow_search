@@ -18,8 +18,8 @@ services:
             NODE_ENV: production
         ports:
             - "3000:3000"
-        volumes:
-            - ./server:/usr/src/app/
+        #volumes:
+        #    - ./server:/usr/src/app/
 
     postgres:
         image: postgres:10.4

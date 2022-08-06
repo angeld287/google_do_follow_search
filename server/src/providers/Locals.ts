@@ -32,6 +32,7 @@ class Locals {
         const urls = [
             'http://localhost:3000',
             'http://localhost:8081',
+            'http://52.70.36.167:8081',
         ];
 
 
