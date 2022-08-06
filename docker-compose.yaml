@@ -18,6 +18,7 @@ services:
             NODE_ENV: production
         ports:
             - "3000:3000"
+        #commented in production build
         #volumes:
         #    - ./server:/usr/src/app/
 
