@@ -13,15 +13,30 @@ RUN npm install
 COPY . .
 
 RUN chown -R node:node /usr/src/app
-USER node
-
-EXPOSE 3000
 
 #Build to project
 RUN npm run build
 
-RUN npm ci --only=production 
 
-# Run node server
-#CMD npm run start
-CMD ["node", "dist/src/Server.js"]
+
+## this is stage two , where the app actually runs
+FROM node
+
+WORKDIR /usr/src/app
+
+COPY package.json ./
+
+RUN npm install --only=production
+
+COPY --from=0 /usr/src/app/dist .
+COPY --from=0 /usr/src/app/ecosystem.config.js .
+
+RUN npm install pm2 -g
+
+EXPOSE 3000
+
+#RUn echo $(ls)
+RUn echo $(ls src/Server.js -ano)
+#RUn echo $(cat /usr/src/app/src/Server.js)
+
+CMD ["pm2-runtime", "start", "ecosystem.config.js"]
