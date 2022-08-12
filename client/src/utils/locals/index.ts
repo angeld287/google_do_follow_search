@@ -12,17 +12,17 @@ class Locals {
      * throughout the app's runtime
      */
     public static config(): any {
-        const server_host = "52.70.36.16";
+        const server_host = "gdfsservice.aangeles.com";
         //(
         //    window._env_ ?
         //        window._env_.REACT_APP_SERVER_HOST : (process.env.SERVER_HOST || "localhost"));
 
-        const server_port = "3000"
+        //const server_port = "3000"
         //(
         //    window._env_ ?
         //        window._env_.REACT_APP_SERVER_PORT : (process.env.REACT_APP_SERVER_PORT || 3000));
 
-        const server_url = "http://" + server_host + ":" + server_port
+        const server_url = "https://" + server_host
 
         const a_tags_reg_exp = /(<a\s*(?!.*\bnofollow)[^>]*)(href="https?:\/\/)((?!(?:(?:www\.)?'.implode('|(?:www\.)?', $follow_list).'))[^"]+)"((?!.*\bnofollow)[^>]*)(?:[^>]*)>/g
         const follow_reg_exp = /rel=("|')dofollow("|')/g

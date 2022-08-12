@@ -1,15 +1,15 @@
 {
-    "dev": {
+    "prod": {
         "awscloudformation": {
-            "AuthRoleName": "amplify-googledofollows-dev-221159-authRole",
-            "UnauthRoleArn": "arn:aws:iam::846928963573:role/amplify-googledofollows-dev-221159-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::846928963573:role/amplify-googledofollows-dev-221159-authRole",
+            "AuthRoleName": "amplify-googledofollowapp-prod-144050-authRole",
+            "UnauthRoleArn": "arn:aws:iam::846928963573:role/amplify-googledofollowapp-prod-144050-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::846928963573:role/amplify-googledofollowapp-prod-144050-authRole",
             "Region": "us-east-1",
-            "DeploymentBucketName": "amplify-googledofollows-dev-221159-deployment",
-            "UnauthRoleName": "amplify-googledofollows-dev-221159-unauthRole",
-            "StackName": "amplify-googledofollows-dev-221159",
-            "StackId": "arn:aws:cloudformation:us-east-1:846928963573:stack/amplify-googledofollows-dev-221159/26f7df10-19e4-11ed-8b39-0ef68930f515",
-            "AmplifyAppId": "d2g0lhzvqza2gr"
+            "DeploymentBucketName": "amplify-googledofollowapp-prod-144050-deployment",
+            "UnauthRoleName": "amplify-googledofollowapp-prod-144050-unauthRole",
+            "StackName": "amplify-googledofollowapp-prod-144050",
+            "StackId": "arn:aws:cloudformation:us-east-1:846928963573:stack/amplify-googledofollowapp-prod-144050/4b4a03e0-1a6e-11ed-864f-0e369be0a54f",
+            "AmplifyAppId": "dysvrvoh6rwf8"
         }
     }
 }
