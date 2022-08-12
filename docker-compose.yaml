@@ -1,11 +1,11 @@
 # docker-compose.yml
 version: "3"
 services:
-    client:
-        build: ./client
-        working_dir: /app
-        ports:
-            - "8081:80"
+    #client:
+    #    build: ./client
+    #    working_dir: /app
+    #    ports:
+    #        - "8081:80"
 
     server:
         build: ./server
@@ -14,10 +14,10 @@ services:
         working_dir: /usr/src/app
         environment:
             DATABASE_URL: postgres://admin:admin@postgres:5432/db
-            PORT: 3000
+            PORT: 80
             NODE_ENV: production
         ports:
-            - "3000:3000"
+            - "80:80"
         #commented in production build
         #volumes:
         #    - ./server:/usr/src/app/
