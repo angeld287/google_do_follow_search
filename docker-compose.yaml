@@ -1,11 +1,11 @@
 # docker-compose.yml
 version: "3"
 services:
-    client:
-        build: ./client
-        working_dir: /app
-        ports:
-            - "8081:80"
+    #client:
+    #    build: ./client
+    #    working_dir: /app
+    #    ports:
+    #        - "8081:80"
 
     server:
         build: ./server
@@ -14,12 +14,13 @@ services:
         working_dir: /usr/src/app
         environment:
             DATABASE_URL: postgres://admin:admin@postgres:5432/db
-            PORT: 3000
+            PORT: 80
             NODE_ENV: production
         ports:
-            - "3000:3000"
-        volumes:
-            - ./server:/usr/src/app/
+            - "80:80"
+        #commented in production build
+        #volumes:
+        #    - ./server:/usr/src/app/
 
     postgres:
         image: postgres:10.4
@@ -31,3 +32,4 @@ services:
             POSTGRES_DB: db
         volumes:
             - ./server/db/database-seed.sql:/docker-entrypoint-initdb.d/database-seed.sql
+            - /var/lib/postgresql/data:/var/lib/postgresql/data

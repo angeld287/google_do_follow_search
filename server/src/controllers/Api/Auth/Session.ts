@@ -7,6 +7,7 @@
 import { IRequest, IResponse } from '../../../interfaces/vendors';
 import { InternalErrorResponse, SuccessResponse } from '../../../core/ApiResponse';
 import { ISessionResponse } from '../../../interfaces/response/UserResponses';
+import Log from '../../../middlewares/Log';
 
 class Session {
     public static async perform(req: IRequest, res: IResponse): Promise<any> {
@@ -20,6 +21,8 @@ class Session {
                 };
                 return new SuccessResponse('success', result).send(res);
             }
+
+            Log.info('The session is inactive ' + req)
 
             result = {
                 message: 'The session is inactive',
