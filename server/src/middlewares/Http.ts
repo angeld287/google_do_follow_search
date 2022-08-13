@@ -4,11 +4,9 @@
  * @author Angel Angeles <aangeles@litystyles.com>
  */
 
-import * as cors from 'cors';
 import * as express from 'express';
 import * as flash from 'express-flash';
 import * as compress from 'compression';
-import * as bodyParser from 'body-parser';
 import * as session from 'express-session';
 import * as cookieSession from 'cookie-session'
 
@@ -16,7 +14,6 @@ import Log from './Log';
 import Locals from '../providers/Locals';
 import Passport from '../providers/Passport';
 import CORS from './CORS';
-//import Passport from '../providers/Passport';
 
 class Http {
 	public static mount(_express: express.Application): express.Application {
