@@ -8,7 +8,6 @@ import * as express from 'express';
 import * as flash from 'express-flash';
 import * as compress from 'compression';
 import * as session from 'express-session';
-import * as cookieSession from 'cookie-session'
 
 import Log from './Log';
 import Locals from '../providers/Locals';
@@ -45,16 +44,7 @@ class Http {
 			}
 		};
 
-		const optionsCs = {
-			name: "__session",
-			keys: ["key1"],
-			maxAge: 6300000,
-			secure: true,
-			httpOnly: true,
-			sameSite: 'none'
-		};
-
-		_express.use(cookieSession(optionsCs));
+		_express.use(session(options));
 
 		// Enables the CORS
 		_express = CORS.mount(_express);
