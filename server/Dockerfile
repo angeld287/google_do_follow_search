@@ -28,6 +28,8 @@ COPY package.json ./
 
 RUN npm install --only=production
 
+RUN mkdir .logs
+
 COPY --from=0 /usr/src/app/dist .
 COPY --from=0 /usr/src/app/ecosystem.config.js .
 
