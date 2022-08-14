@@ -8,6 +8,9 @@ import * as express from 'express';
 import * as flash from 'express-flash';
 import * as compress from 'compression';
 import * as session from 'express-session';
+import * as connectRedis from "connect-redis";
+import { createClient } from "redis";
+
 
 import Log from './Log';
 import Locals from '../providers/Locals';
@@ -34,14 +37,24 @@ class Http {
 		 * into the options object.
 		 */
 
+		//Configuring redis store for session
+		let RedisStore = connectRedis(session)
+		let redisClient = createClient({
+			legacyMode: true,
+		})
+		redisClient.connect().catch(console.error)
+
+
+
 		const options: session.SessionOptions = {
 			resave: true,
 			saveUninitialized: true,
 			secret: Locals.config().appSecret,
 			cookie: {
 				maxAge: 6300000, // two weeks (in ms)
-				sameSite: 'lax'
-			}
+				//sameSite: 'lax'
+			},
+			store: new RedisStore({ client: redisClient })
 		};
 
 		_express.use(session(options));
