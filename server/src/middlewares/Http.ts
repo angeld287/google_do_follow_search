@@ -37,22 +37,38 @@ class Http {
 		 * into the options object.
 		 */
 
-		//Configuring redis store for session
+		//Configuring redis store for session 172.18.0.2
 		let RedisStore = connectRedis(session)
 		let redisClient = createClient({
+			socket: {
+				host: 'redis',
+				port: 6379
+			},
 			legacyMode: true,
 		})
 		redisClient.connect().catch(console.error)
 
 
-
+		/**
+		 * There have been some problems with the implementation of 
+		 * express session in production. This causes the session to only work in firefox.
+		 * 
+		 * - First the sameSite=None (caused by chrome update in 2020)
+		 *   doesn't work in production.
+		 * 		(https://medium.com/swlh/how-the-new-chrome-80-cookie-rule-samesite-none-secure-affects-web-development-c06380220ced#2410)
+		 * 
+		 * - Second trying to add a store to save the sessions with 
+		 *   redis, it doesn't work either.
+		 * 		(https://stackoverflow.com/questions/48073536/express-session-is-not-persisting-in-production)
+		 */
 		const options: session.SessionOptions = {
 			resave: true,
 			saveUninitialized: true,
 			secret: Locals.config().appSecret,
 			cookie: {
 				maxAge: 6300000, // two weeks (in ms)
-				//sameSite: 'lax'
+				sameSite: 'none',
+				secure: true
 			},
 			store: new RedisStore({ client: redisClient })
 		};
