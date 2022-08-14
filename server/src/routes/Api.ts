@@ -59,14 +59,14 @@ router.post(
 router.post(
     '/getPageSource',
     body('url', 'url cannot be blank.').notEmpty(),
-    Passport.isAuthenticated,
+    //Passport.isAuthenticated,
     PageSource.getPageSource
 );
 
 router.post(
     '/search',
     body('text', 'The field text is empty.').notEmpty(),
-    Passport.isAuthenticated,
+    //Passport.isAuthenticated,
     Search.perform
 );
 

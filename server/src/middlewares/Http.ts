@@ -60,6 +60,8 @@ class Http {
 		 * - Second trying to add a store to save the sessions with 
 		 *   redis, it doesn't work either.
 		 * 		(https://stackoverflow.com/questions/48073536/express-session-is-not-persisting-in-production)
+		 * 
+		 *   Note: Since this is a demo project for the React front end, we will disable (temporarily) access control to the APIs necessary for the app to work.
 		 */
 		const options: session.SessionOptions = {
 			resave: true,
